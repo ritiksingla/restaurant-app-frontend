@@ -1,0 +1,10 @@
+.mask {
+	overflow: hidden;
+}
+div {
+	cursor: pointer;
+}
+
+span {
+	color: yellow;
+}
