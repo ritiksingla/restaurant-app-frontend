@@ -1,0 +1,54 @@
+<div class="container mt-5" *ngIf="dish">
+	<div class="card" style="width: 60%;">
+		<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
+			<button class="btn btn-outline-secondary" (click)='onBack()'>
+				<i class="fa fa-chevron-left"></i>
+			</button>
+			<span class="badge rounded-pill bg-info p-3">{{dish.label | lowercase}}</span>
+			<span class="badge rounded-pill bg-info p-3">{{dish.category | lowercase}}</span>
+			<button class="btn btn-outline-info" (click)='onEdit(dish)'>
+				<i class="fa fa-edit"></i>
+			</button>
+			<button class="btn btn-outline-danger" (click)='onDelete(dish?._id)'>
+				<i class="fa fa-trash"></i>
+			</button>
+		</div>
+		<img [src]="dish.imageUrl" class="card-img-top">
+		<div class="card-body">
+			<h4 class="card-title">{{dish.name | uppercase}}</h4>
+			<h5 class="card-subtitle mb-2 text-muted">{{dish.category | capitalize}}</h5>
+			<p class="card-text">{{dish.description}}</p>
+		</div>
+		<div class="card-footer">
+			<div class="d-flex justify-content-between">
+				<span>{{dish.price | currency:'USD':'symbol':'1.2-2'}}</span>
+				<app-star
+					[rating]='dish.starRating'
+					>
+				</app-star>
+			</div>
+		</div>
+	</div>
+	<table class="table" *ngIf="dish?.comments?.length">
+		<thead>
+			<tr>
+				<th>Comment</th>
+				<th>Rating</th>
+				<th>Author</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor='let comment of dish?.comments'>
+				<td>{{comment.comment}}</td>
+				<td><app-star
+					[rating]='comment.rating'
+					>
+					</app-star>
+				</td>
+				<td>{{comment.author | capitalize}}</td>
+				<td>{{comment.date}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
