@@ -1,11 +1,18 @@
-<nav class="navbar navbar-expand navbar-light bg-light mb-3">
+<nav [ngClass]="{
+	'navbar navbar-expand mb-3': true,
+	'navbar-light bg-light': (theme$ | async) == false,
+	'navbar-dark bg-dark text-light' : (theme$ | async)
+}">
 	<div class="container-fluid">
     	<div class="navbar-header">
 			<a class="navbar-brand" routerLink='/welcome'>{{pageTitle}}</a>
 		</div>
-		<ul class="nav nav-pills">
+		<ul class="nav nav-pills align-items-baseline">
 			<li class="nav-item"><a class="nav-link" routerLink='/menu'>Menu</a></li>
 			<li class="nav-item"><a class="nav-link" routerLink='/menu/add'>Add</a></li>
+			<li class="nav-item">
+				<a style="cursor: pointer;" (click) = "onClick()" class="nav-link fa fa-sun-o"></a>
+			</li>
 		</ul>
 	</div>
 </nav>

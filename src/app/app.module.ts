@@ -12,6 +12,7 @@ import { DishModule } from './modules/dish/dish.module';
 // ngrx
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import {appReducer} from './app.state';
 
 @NgModule({
 	declarations: [
@@ -27,7 +28,7 @@ import { EffectsModule } from '@ngrx/effects';
 			{ path: '**', redirectTo: 'welcome', pathMatch: 'full' }
 		]),
 		DishModule,
-		StoreModule.forRoot({}, {}),
+		StoreModule.forRoot({app: appReducer}),
 		EffectsModule.forRoot([])
 	],
 	bootstrap: [AppComponent]

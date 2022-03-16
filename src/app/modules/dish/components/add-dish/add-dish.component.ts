@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import {Observable} from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { State } from '../../reducers/menu.reducer';
@@ -8,6 +9,7 @@ import { IDish } from '../../model/IDish';
 import { DishService } from '../../service/dish.service';
 import * as MenuReducer from '../../reducers/menu.reducer';
 import * as MenuActions from '../../actions/menu.action';
+import {getThemeState} from '../../../../app.state';
 
 @Component({
 	templateUrl: './add-dish.component.html',
@@ -22,11 +24,13 @@ export class AddDishComponent implements OnInit {
 	category: string = '';
 	label: string = '';
 	starRating: number = 5;
+	theme$!: Observable<boolean>;
 	btnTitle: string = 'Add';
 	constructor(private router: Router, private route: ActivatedRoute, private store: Store<State>) {}
 
 	ngOnInit(): void {
-
+		this.theme$ = this.store.select(getThemeState);
+		
 		if (this.route.snapshot.queryParamMap.keys.length > 0) {
 			this.btnTitle = 'Update';
 			let Map = this.route.snapshot.queryParamMap;

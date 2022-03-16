@@ -3,13 +3,14 @@ import { Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { filter, tap, map, take, toArray } from 'rxjs/operators';
 
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { IDish } from '../../model/IDish';
 import { State } from '../../reducers/menu.reducer';
 import * as MenuReducer from '../../reducers/menu.reducer';
 import * as MenuActions from '../../actions/menu.action';
+import {getThemeState} from '../../../../app.state';
 
 @Component({
 	templateUrl: './menu.component.html'
@@ -19,6 +20,7 @@ export class MenuComponent implements OnInit, OnDestroy, OnChanges {
 	dishes$!: Observable<IDish[]>;
 	filteredDishes$!: Observable<IDish[]>;
 	error$!: Observable<string>;
+	theme$!: Observable<boolean>;
 	private _listFilter!: string;
 	get listFilter(): string {
 		return this._listFilter;
@@ -28,10 +30,10 @@ export class MenuComponent implements OnInit, OnDestroy, OnChanges {
 		this.performFilter(value);
 	}
 
-	constructor(private router: Router, private store: Store<State>) { }
+	constructor(private router: Router, private route: ActivatedRoute,
+		private store: Store<State>) { }
 
 	ngOnInit(): void {
-		console.log('OnInit');
 		// Do NOT subscribe here because it uses an async pipe
 		// This gets the initial values until the load is complete.
 		this.dishes$ = this.store.select(MenuReducer.getDishesState);
@@ -39,6 +41,8 @@ export class MenuComponent implements OnInit, OnDestroy, OnChanges {
 			.subscribe(listFilter => this._listFilter = listFilter);
 		// Do NOT subscribe here because it uses an async pipe
 		this.filteredDishes$ = this.store.select(MenuReducer.getFilteredDishesState);
+		
+		this.theme$ = this.store.select(getThemeState);
 	}
 
 	ngOnChanges(): void { console.log('OnChanges'); }

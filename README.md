@@ -1,27 +1,38 @@
-# Restaurent
+# Restaurant
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.1.
+- Each module has it's own components, redux store and effects, services, model and guard protecting routes.
 
-## Development server
+## Key learning to take away
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Routes
+	- Lazy loading route
+	- Guarding the route based on parameters
+	- navigation
 
-## Code scaffolding
+- Forms
+	- ngModel and ngForm data bindings
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular Redux (ngrx)
+	- Reducers, Actions, Effects
 
-## Build
+- Angular http
+	- HttpClient and HttpRespose with singleton injected service
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Angular lifecycle hooks
+	- OnInit, OnChanges, OnDestroy
 
-## Running unit tests
+- Reactive Programming (rxjs)
+	- Working with observables (multiple data push, like streams in java)
+	- rxjs operators for streaming data, does not do anything till subscribe
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Pipes in html
+	- Use pipes to pass through data at runtime rendering of DOM
+	- Custom pipes to format data
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Todos
+- Lazy loading routes
+- Caching the data
+- Auth
+- Testing in Angular
+- Resolver with redux store?

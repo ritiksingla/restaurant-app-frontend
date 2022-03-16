@@ -1,5 +1,9 @@
 <div class="container">
-	<div class="card">
+	<div 
+	[ngClass] = "{
+		'bg-dark text-light': theme$ | async
+	}"
+	class="card">
 		<div class="card-header">
 		New Dish
 		</div>

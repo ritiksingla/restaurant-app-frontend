@@ -15,11 +15,11 @@ export class DishService {
 
 	// Observable is like a stream in java
 	getDishes(): Observable<IDish[]> {
-		alert('getting dishes');
+		// alert('getting dishes');
 		return this.http.get<IDish[]>(this.dishUrl).pipe(catchError(this.handleError));
 	}
 
-	getDish(id: string): Observable<IDish | undefined> {
+	getDish(id: string): Observable<IDish> {
 		return this.http.get<IDish>(`${this.dishUrl}/${id}`).pipe(catchError(this.handleError));
 	}
 

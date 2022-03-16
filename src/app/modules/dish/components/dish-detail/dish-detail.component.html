@@ -1,7 +1,15 @@
 <div class="container mt-5" *ngIf="dish$ | async as dish">
-	<div class="card" style="width: 60%;">
+	<div [ngClass] = "{
+		'bg-dark text-light': theme$ | async
+	}"
+	class="card" style="width: 60%;">
 		<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
-			<button class="btn btn-outline-secondary" (click)='onBack()'>
+			<button
+			[ngClass] = "{
+				'btn-outline-light': theme$ | async,
+				'btn-outline-secondary': (theme$ | async) == false
+			}"
+			 class="btn" (click)='onBack()'>
 				<i class="fa fa-chevron-left"></i>
 			</button>
 			<span class="badge rounded-pill bg-info p-3">{{dish.label | lowercase}}</span>

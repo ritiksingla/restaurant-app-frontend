@@ -1,4 +1,8 @@
-<div class="card">
+<div 
+[ngClass] = "{
+	'bg-dark text-light' : theme$ | async
+}"
+class="card">
   <div class="card-header">
     {{pageTitle}}
   </div>
