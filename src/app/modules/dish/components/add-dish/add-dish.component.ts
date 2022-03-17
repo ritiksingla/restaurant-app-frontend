@@ -10,6 +10,7 @@ import { DishService } from '../../service/dish.service';
 import * as MenuReducer from '../../reducers/menu.reducer';
 import * as MenuActions from '../../actions/menu.action';
 import {getThemeState} from '../../../../app.state';
+import {IUser} from '../../../user/models/IUser';
 
 @Component({
 	templateUrl: './add-dish.component.html',
@@ -25,12 +26,21 @@ export class AddDishComponent implements OnInit {
 	label: string = '';
 	starRating: number = 5;
 	theme$!: Observable<boolean>;
+	user: IUser={
+		first_name:'',
+		last_name:'',
+		email:'',
+		password:''
+	};
 	btnTitle: string = 'Add';
-	constructor(private router: Router, private route: ActivatedRoute, private store: Store<State>) {}
+
+	constructor(private router: Router, private route: ActivatedRoute, private store: Store<State>) {
+		// let user = String(localStorage.getItem('user'));
+		// this.user = JSON.parse(user);
+	}
 
 	ngOnInit(): void {
 		this.theme$ = this.store.select(getThemeState);
-		
 		if (this.route.snapshot.queryParamMap.keys.length > 0) {
 			this.btnTitle = 'Update';
 			let Map = this.route.snapshot.queryParamMap;
@@ -62,6 +72,7 @@ export class AddDishComponent implements OnInit {
 	}
 	onSubmit(f: NgForm): void {
 		let newDish: IDish = {
+			user: this.user,
 			name: this.name,
 			imageUrl: this.imageUrl,
 			description: this.description,

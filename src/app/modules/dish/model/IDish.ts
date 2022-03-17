@@ -1,4 +1,5 @@
 import { IComment } from './IComment';
+import { IUser } from 'src/app/modules/user/models/IUser';
 
 export interface IDish {
 	readonly _id?: string;
@@ -9,5 +10,6 @@ export interface IDish {
 	price: number;
 	description: string;
 	starRating: number;
+	user: IUser;
 	comments?: IComment[];
 }

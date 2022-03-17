@@ -28,7 +28,18 @@
 - Pipes in html
 	- Use pipes to pass through data at runtime rendering of DOM
 	- Custom pipes to format data
+- user registration service
+	1. create user in mongodb
+	2. create a jwt
+	3. send jwt to angular
+	4. store jwt in angular
+	5. store jwt in angular authentication header
+	6. decrypt jwt in nodejs
+	7. identify user
 
+- ngrx/data
+	- using ngrx/data for user entity only as it does not support deep cloning
+	- less code for simple data entities
 
 ## Todos
 - Lazy loading routes

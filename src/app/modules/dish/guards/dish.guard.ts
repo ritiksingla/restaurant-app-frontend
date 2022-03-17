@@ -5,12 +5,14 @@ import { Observable } from 'rxjs';
 @Injectable({
 	providedIn: 'root'
 })
-export class DishDetailGuard implements CanActivate {
+export class DishGuard implements CanActivate {
 	constructor(private router: Router) { }
 	canActivate(
 		route: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-		// const id = Number(route.paramMap.get('id')); // validate id if needed
-		return true;
+		if(localStorage.getItem('jwt') !== null) {
+			return true;
+		}
+		return false;
 	}
 }

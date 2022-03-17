@@ -8,8 +8,9 @@
 			<a class="navbar-brand" routerLink='/welcome'>{{pageTitle}}</a>
 		</div>
 		<ul class="nav nav-pills align-items-baseline">
-			<li class="nav-item"><a class="nav-link" routerLink='/menu'>Menu</a></li>
-			<li class="nav-item"><a class="nav-link" routerLink='/menu/add'>Add</a></li>
+			<li class="nav-item"><a class="nav-link" [routerLink]="auth ? ['/menu'] : ['/user/login']">{{auth?'Menu':'Login'}}</a></li>
+			<li class="nav-item"><a class="nav-link" [routerLink]="auth ? ['/menu/add'] : ['/user/register']">{{auth?'Add Dish':'Register'}}</a></li>
+			<li *ngIf="auth" class="nav-item"><a (click)="logout()" style="cursor: pointer;" class="nav-link">Logout</a></li>
 			<li class="nav-item">
 				<a style="cursor: pointer;" (click) = "onClick()" class="nav-link fa fa-sun-o"></a>
 			</li>

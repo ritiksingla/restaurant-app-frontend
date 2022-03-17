@@ -1,7 +1,10 @@
-import { createAction, createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
+import {
+	createAction, createReducer, on, props,
+	createFeatureSelector, createSelector
+} from '@ngrx/store';
 
 interface AppState {
-	theme:boolean;
+	theme: boolean;
 }
 
 export interface State {
@@ -17,8 +20,12 @@ export const getThemeState = createSelector(
 
 export const ThemeAction = createAction('[App] toggle theme');
 
+const initialState: AppState = {
+	theme: false
+};
+
 export const appReducer = createReducer<AppState>(
-	{theme: false},
+	initialState,
 	on(ThemeAction, (state): AppState => {
 		return {
 			theme: !state.theme

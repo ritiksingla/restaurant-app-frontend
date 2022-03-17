@@ -26,6 +26,12 @@ const initialMenuState: MenuState = {
 		price: 0,
 		description: '',
 		starRating: 0,
+		user:{
+			first_name:'',
+			last_name:'',
+			email:'',
+			password:''
+		},
 		comments: []
 	},
 	error: '',
@@ -91,6 +97,7 @@ export const menuReducer = createReducer<MenuState>(
 		};
 	}),
 	on(MenuAction.loadDishesError, (state, action): MenuState => {
+		alert(JSON.stringify(action.error));
 		return {
 			...state,
 			dishes: [],

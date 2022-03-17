@@ -8,14 +8,15 @@ import { catchError, tap, map } from 'rxjs/operators';
 	providedIn: 'root'
 })
 export class DishService {
-	private dishUrl = 'https://angular-restaurant-app.herokuapp.com/dish';
+	// private dishUrl = 'https://angular-restaurant-app.herokuapp.com/dish';
+	private dishUrl = 'http://localhost:5000/dish';
 
 	// dependency injection for HttpClient
 	constructor(private http: HttpClient) { }
 
 	// Observable is like a stream in java
 	getDishes(): Observable<IDish[]> {
-		// alert('getting dishes');
+		alert('getting dishes');
 		return this.http.get<IDish[]>(this.dishUrl).pipe(catchError(this.handleError));
 	}
 
@@ -40,7 +41,7 @@ export class DishService {
 			errorMessage = `An error occured: ${err.error.message}`;
 		else
 			errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-		console.log(errorMessage);
+		alert(errorMessage);
 		return throwError(errorMessage);
 	}
 }
