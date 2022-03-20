@@ -1,9 +1,5 @@
 <div class="container">
-	<div 
-	[ngClass] = "{
-		'bg-dark text-light': theme$ | async
-	}"
-	class="card">
+	<div [ngClass] = "{'bg-dark text-light': darkTheme}" class="card">
 		<div class="card-header">
 		New Dish
 		</div>
@@ -11,32 +7,40 @@
 			<form  #newDishForm="ngForm" (ngSubmit)="onSubmit(newDishForm)">
 				<div class="form-group mb-3 mt-3">
 					<label for="name">Name:</label>
-					<input class="form-control" type="text" id="name" name="name" [(ngModel)]="name" required>
+					<input maxlength="20" class="form-control" type="text" id="name" name="name" [(ngModel)]="name" required #nameField = "ngModel">
 				</div>
+				<div *ngIf="nameField.invalid && nameField.touched" class="alert alert-danger">Please enter dish name</div>
 				<div class="form-group mb-3">
 					<label for="imageUrl">Image URL:</label>
-					<input class="form-control" type="text" id="imageUrl" name="imageUrl" [(ngModel)]="imageUrl" required>
+					<input class="form-control" type="text" id="imageUrl" name="imageUrl" [(ngModel)]="imageUrl" required #imageUrlField = "ngModel">
 				</div>
+				<div *ngIf="imageUrlField.invalid && imageUrlField.touched" class="alert alert-danger">Please enter image url</div>
 				<div class="form-group mb-3">
 					<label for="category">Category:</label>
-					<input class="form-control" type="text" id="category" name="category" [(ngModel)]="category" required>
+					<select class="form-control" type="text" id="category" name="category" [(ngModel)]="category" required #categoryField = "ngModel">
+						<option value="" disabled selected>Select Category</option>
+						<option *ngFor="let categ of (categories$ | async)">{{categ}}</option>
+					</select>
 				</div>
+				<div *ngIf="categoryField.invalid && categoryField.touched" class="alert alert-danger">Please select dish category</div>
 				<div class="form-group mb-3">
 					<label for="label">Label:</label>
-					<input class="form-control" type="text" id="label" name="label" [(ngModel)]="label" required>
+					<select class="form-control" type="text" id="label" name="label" [(ngModel)]="label" required #labelField = "ngModel">
+						<option value="" disabled selected>Select Label</option>
+						<option *ngFor="let label_ of (labels$ | async)">{{label_}}</option>
+					</select>
 				</div>
+				<div *ngIf="labelField.invalid && labelField.touched" class="alert alert-danger">Please select dish label</div>
 				<div class="form-group mb-3">
 					<label for="description">Description:</label>
-					<textarea class="form-control" id="description" name="description" cols="3" [(ngModel)]="description" required></textarea>
+					<textarea maxlength="100" class="form-control" id="description" name="description" cols="3" [(ngModel)]="description" required #descriptionField = "ngModel"></textarea>
 				</div>
+				<div *ngIf="descriptionField.invalid && descriptionField.touched" class="alert alert-danger">Description should be between 1 to 100 words</div>
 				<div class="form-group mb-3">
 					<label for="price">Price:</label>
-					<input class="form-control" type="number" id="price" name="price" [(ngModel)]="price" required>
+					<input min="0" class="form-control" type="number" id="price" name="price" [(ngModel)]="price" required #priceField="ngModel">
 				</div>
-				<div class="form-group mb-3">
-					<label for="starRating">Rating:</label>
-					<input class="form-control" type="number" id="starRating" name="starRating" [(ngModel)]="starRating" required>
-				</div>
+				<div *ngIf="priceField.invalid && priceField.touched" class="alert alert-danger">Price should be non negative</div>
 				<button class="form-control btn btn-primary" type="submit">{{btnTitle}}</button>
 			</form>
 		</div>

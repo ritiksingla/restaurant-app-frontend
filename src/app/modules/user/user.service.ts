@@ -8,13 +8,13 @@ import { catchError, tap, map } from 'rxjs/operators';
 	providedIn: 'root'
 })
 export class UserService {
-	// private userUrl = 'https://angular-restaurant-app.herokuapp.com/user';
-	private userUrl = 'http://localhost:5000/user';
+	private userUrl = 'https://angular-restaurant-app.herokuapp.com/user';
+	// private userUrl = 'http://localhost:5000/user';
 	
 	constructor(private http: HttpClient) { }
 	
-	getUsers(): Observable<{users:IUser[], error:string}> {
-		return this.http.get<{users:IUser[], error:string}>(this.userUrl).pipe(catchError(this.handleError));
+	getUsers(): Observable<IUser[]> {
+		return this.http.get<IUser[]>(this.userUrl).pipe(catchError(this.handleError));
 	}
 
 	getUser(id: string): Observable<{user:IUser, error:string}> {

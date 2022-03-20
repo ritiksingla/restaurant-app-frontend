@@ -1,23 +1,23 @@
-<div class="container mt-5" *ngIf="dish$ | async as dish">
+<div class="container mt-5" *ngIf="dishCommentsWithAuthors$ | async as dish">
 	<div [ngClass] = "{
-		'bg-dark text-light': theme$ | async
+		'bg-dark text-light': darkTheme
 	}"
-	class="card" style="width: 60%;">
+	class="card mb-3" style="width: 60%;">
 		<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
 			<button
 			[ngClass] = "{
-				'btn-outline-light': theme$ | async,
-				'btn-outline-secondary': (theme$ | async) == false
+				'btn-outline-light': darkTheme,
+				'btn-outline-secondary': darkTheme == false
 			}"
 			 class="btn" (click)='onBack()'>
 				<i class="fa fa-chevron-left"></i>
 			</button>
 			<span class="badge rounded-pill bg-info p-3">{{dish.label | lowercase}}</span>
 			<span class="badge rounded-pill bg-info p-3">{{dish.category | lowercase}}</span>
-			<button class="btn btn-outline-info" (click)='onEdit(dish)'>
+			<button *ngIf="currentUser._id==dish.user._id" class="btn btn-outline-info" (click)='onEdit(dish)'>
 				<i class="fa fa-edit"></i>
 			</button>
-			<button class="btn btn-outline-danger" (click)='onDelete(dish?._id)'>
+			<button *ngIf="currentUser._id==dish.user._id" class="btn btn-outline-danger" (click)='onDelete(dish?._id)'>
 				<i class="fa fa-trash"></i>
 			</button>
 		</div>
@@ -26,37 +26,53 @@
 			<h4 class="card-title">{{dish.name | uppercase}}</h4>
 			<h5 class="card-subtitle mb-2 text-muted">{{dish.category | capitalize}}</h5>
 			<p class="card-text">{{dish.description}}</p>
+			<p class="card-subtitle text-muted">by - {{dish.user.first_name}}</p>
 		</div>
 		<div class="card-footer">
 			<div class="d-flex justify-content-between">
 				<span>{{dish.price | currency:'USD':'symbol':'1.2-2'}}</span>
 				<app-star
-					[rating]='dish.starRating'
+					[rating]='dish.averageRating'
 					>
 				</app-star>
 			</div>
 		</div>
 	</div>
-	<table class="table" *ngIf="dish?.comments?.length">
-		<thead>
-			<tr>
-				<th>Comment</th>
-				<th>Rating</th>
-				<th>Author</th>
-				<th>Date</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor='let comment of dish?.comments'>
-				<td>{{comment.comment}}</td>
-				<td><app-star
-					[rating]='comment.rating'
-					>
-					</app-star>
-				</td>
-				<td>{{comment.author.first_name | capitalize}}</td>
-				<td>{{comment.author.last_name}}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div>
+		<div *ngIf="dish.comments.length">
+			<div *ngFor="let comment of dish.comments" [ngClass] = "{'bg-dark text-light': darkTheme}" class="card mb-3">
+				<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
+					<button *ngIf="currentUser._id==comment.author._id" class="btn btn-outline-info" (click)='onEditComment(comment)'>
+						<i class="fa fa-edit"></i>
+					</button>
+					<span>- {{comment.author.first_name | capitalize}} {{comment.author.last_name | capitalize}}</span>
+					<button *ngIf="currentUser._id==comment.author._id" class="btn btn-outline-danger" (click)='onDeleteComment(comment)'>
+						<i class="fa fa-trash"></i>
+					</button>
+				</div>
+				<div class="card-body">
+					<p class="card-text">{{comment.content}}</p>
+					<div class="d-flex justify-content-between align-items-baseline">
+						<p class="card-text">{{comment.createdAt | date:'medium'}}</p>
+						<app-star [rating]='comment.rating'>
+						</app-star>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div [ngClass] = "{'bg-dark text-light': darkTheme}" class="card">
+			<div class="card-header">Make Comment</div>
+			<div class="card-body">
+				<div class="form-group mb-3">
+					<label for="comment_content">Content:</label>
+					<textarea class="form-control" id="comment_content" name="comment_content" cols="2" [(ngModel)]="comment_content" required></textarea>
+				</div>
+				<div class="form-group mb-3">
+					<label for="comment_rating">Rating:</label>
+					<input class="form-control" id="comment_rating" name="comment_rating" [(ngModel)]="comment_rating" type="number" max="5" min="1" required>
+				</div>
+				<button (click)="addComment(dish)" class="btn btn-primary">POST</button>
+			</div>
+		</div>
+	</div>
 </div>

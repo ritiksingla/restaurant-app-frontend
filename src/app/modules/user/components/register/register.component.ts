@@ -5,8 +5,7 @@ import { UserService } from '../../user.service';
 import {IUser} from '../../models/IUser';
 
 @Component({
-	templateUrl: './register.component.html',
-	styleUrls: ['./register.component.css']
+	templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
 	user: IUser = {
@@ -15,15 +14,20 @@ export class RegisterComponent implements OnInit {
 		email:'',
 		password:''
 	}
+	get darkTheme() {
+		return localStorage.getItem('theme') === 'dark';
+	}
 	constructor(private router:Router ,private userService: UserService) { }
 
 	ngOnInit(): void { }
 	onSubmit(f: NgForm): void {
 		// using redux store here is not sensible
-		this.userService.registerUser(this.user).subscribe(x => {
-			if(x.user) {
-				this.router.navigate(['/login']);
-			}
-		});
+		if (f.valid) {
+			this.userService.registerUser(this.user).subscribe(x => {
+				if(x.user) {
+					this.router.navigate(['/login']);
+				}
+			});
+		}
 	}
 }

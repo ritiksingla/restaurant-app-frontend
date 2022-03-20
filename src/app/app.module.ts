@@ -15,7 +15,7 @@ import {AuthInterceptor} from './auth.interceptor';
 
 // ngrx/store
 import { StoreModule } from '@ngrx/store';
-import {appReducer} from './app.state';
+// import {appReducer} from './app.state';
 
 // ngrx/effects
 import { EffectsModule } from '@ngrx/effects';
@@ -35,7 +35,7 @@ import { EffectsModule } from '@ngrx/effects';
 			{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
 			{ path: '**', redirectTo: 'welcome', pathMatch: 'full' }
 		]),
-		StoreModule.forRoot({app: appReducer}),
+		StoreModule.forRoot({}),
 		EffectsModule.forRoot([])
 	],
 	providers:[{

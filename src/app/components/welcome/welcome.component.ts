@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import {Store} from '@ngrx/store';
-import {State, getThemeState} from '../../app.state';
+import {State} from '../../app.state';
 
 @Component({
 	templateUrl: './welcome.component.html',
@@ -9,9 +9,9 @@ import {State, getThemeState} from '../../app.state';
 })
 export class WelcomeComponent implements OnInit {
 	pageTitle = 'Welcome';
-	theme$!: Observable<boolean>;
-	constructor(private store: Store<State>) {}
-	ngOnInit(): void {
-		this.theme$ = this.store.select(getThemeState);
+	get darkTheme():boolean {
+		return localStorage.getItem('theme') === 'dark';
 	}
+	constructor(private store: Store<State>) {}
+	ngOnInit(): void {}
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UserService } from './user.service';
 import { of } from 'rxjs';
-import { map, mergeMap, catchError, tap, switchMap } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap, concatMap } from 'rxjs/operators';
 import * as AppAction from './user.action';
 import {Router} from '@angular/router';
 
@@ -12,10 +12,9 @@ export class UserEffect {
 	
 	loginUser$ = createEffect(() => this.actions$.pipe(
 		ofType(AppAction.loginUser),
-		switchMap(action => this.userService.loginUser(action.email, action.password).pipe(
+		concatMap(action => this.userService.loginUser(action.email, action.password).pipe(
 			map(res => {
 				if(res.error.length > 0) {
-					alert(res.error);
 					return AppAction.loginUserError({error: res.error});
 				} else {
 					localStorage.setItem('user', JSON.stringify(res.user));

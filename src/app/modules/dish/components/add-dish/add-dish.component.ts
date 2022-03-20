@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import {Observable} from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
+import { shareReplay, catchError } from 'rxjs/operators';
 
 import { Store } from '@ngrx/store';
-import { State } from '../../reducers/menu.reducer';
-import { IDish } from '../../model/IDish';
-import { DishService } from '../../service/dish.service';
-import * as MenuReducer from '../../reducers/menu.reducer';
-import * as MenuActions from '../../actions/menu.action';
-import {getThemeState} from '../../../../app.state';
-import {IUser} from '../../../user/models/IUser';
+import { State } from '../../dish.reducer';
+import { IDish } from '../../models/IDish';
+import { DishService } from '../../dish.service';
+import * as DishActions from '../../dish.action';
+import { IUser } from '../../../user/models/IUser';
 
 @Component({
-	templateUrl: './add-dish.component.html',
-	styleUrls: ['./add-dish.component.css']
+	templateUrl: './add-dish.component.html'
 })
 export class AddDishComponent implements OnInit {
 	_id: string = '';
@@ -24,23 +22,34 @@ export class AddDishComponent implements OnInit {
 	price: number = 0;
 	category: string = '';
 	label: string = '';
-	starRating: number = 5;
-	theme$!: Observable<boolean>;
-	user: IUser={
-		first_name:'',
-		last_name:'',
-		email:'',
-		password:''
+	user: IUser = {
+		first_name: '',
+		last_name: '',
+		email: '',
+		password: ''
 	};
+	error: string = '';
 	btnTitle: string = 'Add';
+	get darkTheme(): boolean {
+		return localStorage.getItem('theme') === 'dark';
+	}
 
-	constructor(private router: Router, private route: ActivatedRoute, private store: Store<State>) {
-		// let user = String(localStorage.getItem('user'));
-		// this.user = JSON.parse(user);
+	categories$: Observable<string[]>;
+	labels$: Observable<string[]>;
+
+	constructor(private router: Router, private route: ActivatedRoute,
+		private service: DishService, private store: Store<State>) {
+		let user = localStorage.getItem('user');
+		if (user)
+			{
+				this.user = JSON.parse(user);
+			}
+
+		this.categories$ = this.service.categories$;
+		this.labels$ = this.service.labels$;
 	}
 
 	ngOnInit(): void {
-		this.theme$ = this.store.select(getThemeState);
 		if (this.route.snapshot.queryParamMap.keys.length > 0) {
 			this.btnTitle = 'Update';
 			let Map = this.route.snapshot.queryParamMap;
@@ -65,12 +74,12 @@ export class AddDishComponent implements OnInit {
 			if (Map.has('price')) {
 				this.price = Number(Map.get('price'));
 			}
-			if (Map.has('starRating')) {
-				this.starRating = Number(Map.get('starRating'));
-			}
 		}
 	}
 	onSubmit(f: NgForm): void {
+		if (f.invalid) {
+			return;
+		}
 		let newDish: IDish = {
 			user: this.user,
 			name: this.name,
@@ -79,15 +88,16 @@ export class AddDishComponent implements OnInit {
 			price: this.price,
 			category: this.category,
 			label: this.label,
-			starRating: this.starRating
+			averageRating: 0,
+			comments:[]
 		};
 		if (this._id.length > 0) {
-			this.store.dispatch(MenuActions.updateDish({
+			this.store.dispatch(DishActions.updateDish({
 				_id: this._id,
 				updatedDish: newDish
 			}));
 		} else {
-			this.store.dispatch(MenuActions.addDish({newDish}));
+			this.store.dispatch(DishActions.addDish({ newDish }));
 		}
 		this.router.navigate(['/menu']);
 	}

@@ -3,16 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MenuComponent } from './components/menu/menu.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
-import { DishGuard } from './guards/dish.guard';
+import { DishGuard } from './dish.guard';
 import { AddDishComponent } from './components/add-dish/add-dish.component';
 import { Capitalize } from '../shared/pipes/capitalize.pipe';
 import { SharedModule } from '../shared/shared.module';
 
 // ngrx
 import { StoreModule } from '@ngrx/store';
-import { menuReducer } from './reducers/menu.reducer';
+import {dishReducer} from './dish.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { DishEffect } from './effects/dish.effect';
+import { DishEffect } from './dish.effect';
 
 const dishRoutes: Routes = [
 	{ path: 'menu', canActivate: [DishGuard], component: MenuComponent },
@@ -30,7 +30,7 @@ const dishRoutes: Routes = [
 	imports: [
 		RouterModule.forChild(dishRoutes),
 		SharedModule,
-		StoreModule.forFeature('menu', menuReducer),
+		StoreModule.forFeature('dish', dishReducer),
 		EffectsModule.forFeature([DishEffect])
 	]
 })

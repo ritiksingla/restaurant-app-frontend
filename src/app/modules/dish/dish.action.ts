@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IDish } from '../model/IDish';
+import { IDish } from './models/IDish';
 
 export const listFilterAction = createAction('[Menu] set listFilter',
 	props<{ listFilter: string }>()
@@ -14,7 +14,6 @@ export const filteredDishesAction = createAction('[Menu] set filteredDishes',
 );
 
 // http actions
-// Load initial menu
 export const loadDishes = createAction('[Dishes] load');
 export const loadDishesSuccess = createAction('[Dishes] load success',
 	props<{ dishes: IDish[] }>()

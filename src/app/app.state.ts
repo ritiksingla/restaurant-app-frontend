@@ -4,7 +4,7 @@ import {
 } from '@ngrx/store';
 
 interface AppState {
-	theme: boolean;
+	// theme: boolean;
 }
 
 export interface State {
@@ -13,22 +13,22 @@ export interface State {
 
 const getAppFeatureState = createFeatureSelector<AppState>('app');
 
-export const getThemeState = createSelector(
-	getAppFeatureState,
-	state => state.theme
-);
+// export const getThemeState = createSelector(
+// 	getAppFeatureState,
+// 	state => state.theme
+// );
 
-export const ThemeAction = createAction('[App] toggle theme');
+// export const ThemeAction = createAction('[App] toggle theme');
 
-const initialState: AppState = {
-	theme: false
-};
+// const initialState: AppState = {
+// 	theme: false
+// };
 
-export const appReducer = createReducer<AppState>(
-	initialState,
-	on(ThemeAction, (state): AppState => {
-		return {
-			theme: !state.theme
-		};
-	})
-);
+// export const appReducer = createReducer<AppState>(
+// 	initialState,
+// 	on(ThemeAction, (state): AppState => {
+// 		return {
+// 			theme: !state.theme
+// 		};
+// 	})
+// );

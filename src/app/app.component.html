@@ -1,7 +1,7 @@
 <nav [ngClass]="{
 	'navbar navbar-expand mb-3': true,
-	'navbar-light bg-light': (theme$ | async) == false,
-	'navbar-dark bg-dark text-light' : (theme$ | async)
+	'navbar-light bg-light': (darkTheme == false),
+	'navbar-dark bg-dark' : darkTheme
 }">
 	<div class="container-fluid">
     	<div class="navbar-header">

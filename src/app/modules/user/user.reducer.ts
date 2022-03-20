@@ -7,6 +7,7 @@ export interface UserState {
 	jwt_token: string;
 	current_user: IUser;
 	authenticated: boolean;
+	error: string;
 }
 
 export interface State extends AppState.State {
@@ -19,6 +20,10 @@ export const getAuthState = createSelector(
 	getUserFeatureState,
 	state => state.authenticated
 );
+export const getErrorState = createSelector(
+	getUserFeatureState,
+	state => state.error
+);
 
 const emptyUser: IUser = {
 	first_name: '',
@@ -29,7 +34,8 @@ const emptyUser: IUser = {
 const initialState: UserState = {
 	jwt_token: '',
 	authenticated: false,
-	current_user: emptyUser
+	current_user: emptyUser,
+	error:''
 };
 
 export const userReducer = createReducer<UserState>(
@@ -38,18 +44,21 @@ export const userReducer = createReducer<UserState>(
 		return {
 			jwt_token: action.jwt,
 			current_user: action.user,
-			authenticated: true
+			authenticated: true,
+			error:''
 		};
 	}),
 	on(UserActions.loginUserError, (state, action): UserState => {
 		return {
 			current_user: emptyUser,
 			jwt_token: '',
-			authenticated: false
+			authenticated: false,
+			error: action.error
 		};
 	}),
 	on(UserActions.logoutUser, (state, action): UserState => {
 		return {
+			...state,
 			current_user: emptyUser,
 			jwt_token: '',
 			authenticated: false

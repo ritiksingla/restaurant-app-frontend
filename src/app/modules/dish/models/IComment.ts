@@ -1,9 +1,11 @@
 import { IUser } from 'src/app/modules/user/models/IUser';
+import {IDish} from './IDish';
 
 export interface IComment {
-	readonly _id: string;
+	readonly _id?: string;
 	rating: number;
-	comment: string;
+	content: string;
+	createdAt: Date;
 	author: IUser;
-	date: Date;
+	dish: IDish;
 }

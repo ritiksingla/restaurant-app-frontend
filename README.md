@@ -1,49 +1,58 @@
 # Restaurant
 
-- Each module has it's own components, redux store and effects, services, model and guard protecting routes.
+- Each module has its components, redux store and effects, services, model, and guard protecting routes
 
-## Key learning to take away
+## Key learnings to take away
 
 - Routes
-	- Lazy loading route
-	- Guarding the route based on parameters
+	- Guarding the route based on parameters and token
 	- navigation
 
-- Forms
-	- ngModel and ngForm data bindings
+- ngForm
+	- ngModel and ngForm data bindings (one way and two way)
+	- form validation for browser independency displaying messages
 
 - Angular Redux (ngrx)
 	- Reducers, Actions, Effects
+	- may not need redux but used for learning
 
-- Angular http
+- Angular HTTP
 	- HttpClient and HttpRespose with singleton injected service
+	- use with operator shareReplay(1) to cache data and call API only once
 
 - Angular lifecycle hooks
 	- OnInit, OnChanges, OnDestroy
 
 - Reactive Programming (rxjs)
-	- Working with observables (multiple data push, like streams in java)
-	- rxjs operators for streaming data, does not do anything till subscribe
+	- Working with observables that come handy while emitting async data 
+	  to all subscribers
+	- rxjs operators for streaming data
 
-- Pipes in html
+- Pipes in HTML
 	- Use pipes to pass through data at runtime rendering of DOM
 	- Custom pipes to format data
-- user registration service
-	1. create user in mongodb
+
+- User registration service
+	1. create a user in MongoDB
 	2. create a jwt
 	3. send jwt to angular
 	4. store jwt in angular
-	5. store jwt in angular authentication header
+	5. store jwt in the angular authentication header
 	6. decrypt jwt in nodejs
-	7. identify user
+	7. identify the user
 
-- ngrx/data
-	- using ngrx/data for user entity only as it does not support deep cloning
-	- less code for simple data entities
+- Authorization
+	- use HTTP interceptor (analogous to middlewares) for setting header token
+	- protect routes using guards
+
+- Cache the data
+	- use vanilla javascript's localStorage to store small data across the session
+	- use the redux store for synchronizing the data and subscribe to changes till the session is reloaded
+	- use shareReplay in to cache HTTP response data till refreshing
 
 ## Todos
 - Lazy loading routes
-- Caching the data
-- Auth
-- Testing in Angular
-- Resolver with redux store?
+- Angular material
+- Angular animations while routing
+- Testing in angular
+- Resolver with the redux store ?
