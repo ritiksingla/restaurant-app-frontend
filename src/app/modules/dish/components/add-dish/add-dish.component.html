@@ -1,48 +1,46 @@
-<div class="container">
-	<div [ngClass] = "{'bg-dark text-light': darkTheme}" class="card">
-		<div class="card-header">
+<div [ngClass] = "{'bg-dark text-light': darkTheme}" class="card">
+	<div class="card-header">
 		New Dish
-		</div>
-		<div class="card-body">
-			<form  #newDishForm="ngForm" (ngSubmit)="onSubmit(newDishForm)">
-				<div class="form-group mb-3 mt-3">
-					<label for="name">Name:</label>
-					<input maxlength="20" class="form-control" type="text" id="name" name="name" [(ngModel)]="name" required #nameField = "ngModel">
-				</div>
-				<div *ngIf="nameField.invalid && nameField.touched" class="alert alert-danger">Please enter dish name</div>
-				<div class="form-group mb-3">
-					<label for="imageUrl">Image URL:</label>
-					<input class="form-control" type="text" id="imageUrl" name="imageUrl" [(ngModel)]="imageUrl" required #imageUrlField = "ngModel">
-				</div>
-				<div *ngIf="imageUrlField.invalid && imageUrlField.touched" class="alert alert-danger">Please enter image url</div>
-				<div class="form-group mb-3">
-					<label for="category">Category:</label>
-					<select class="form-control" type="text" id="category" name="category" [(ngModel)]="category" required #categoryField = "ngModel">
-						<option value="" disabled selected>Select Category</option>
-						<option *ngFor="let categ of (categories$ | async)">{{categ}}</option>
-					</select>
-				</div>
-				<div *ngIf="categoryField.invalid && categoryField.touched" class="alert alert-danger">Please select dish category</div>
-				<div class="form-group mb-3">
-					<label for="label">Label:</label>
-					<select class="form-control" type="text" id="label" name="label" [(ngModel)]="label" required #labelField = "ngModel">
-						<option value="" disabled selected>Select Label</option>
-						<option *ngFor="let label_ of (labels$ | async)">{{label_}}</option>
-					</select>
-				</div>
-				<div *ngIf="labelField.invalid && labelField.touched" class="alert alert-danger">Please select dish label</div>
-				<div class="form-group mb-3">
-					<label for="description">Description:</label>
-					<textarea maxlength="100" class="form-control" id="description" name="description" cols="3" [(ngModel)]="description" required #descriptionField = "ngModel"></textarea>
-				</div>
-				<div *ngIf="descriptionField.invalid && descriptionField.touched" class="alert alert-danger">Description should be between 1 to 100 words</div>
-				<div class="form-group mb-3">
-					<label for="price">Price:</label>
-					<input min="0" class="form-control" type="number" id="price" name="price" [(ngModel)]="price" required #priceField="ngModel">
-				</div>
-				<div *ngIf="priceField.invalid && priceField.touched" class="alert alert-danger">Price should be non negative</div>
-				<button class="form-control btn btn-primary" type="submit">{{btnTitle}}</button>
-			</form>
-		</div>
+	</div>
+	<div class="card-body">
+		<form  #newDishForm="ngForm" (ngSubmit)="onSubmit(newDishForm)">
+			<div class="form-group mb-3 mt-3">
+				<label for="name">Name:</label>
+				<input maxlength="20" class="form-control" type="text" id="name" name="name" [(ngModel)]="currentDish.name" required #nameField = "ngModel">
+			</div>
+			<div *ngIf="nameField.invalid && nameField.touched" class="alert alert-danger">Please enter dish name</div>
+			<div class="form-group mb-3">
+				<label for="imageUrl">Image URL:</label>
+				<input class="form-control" type="text" id="imageUrl" name="imageUrl" [(ngModel)]="currentDish.imageUrl" required #imageUrlField = "ngModel">
+			</div>
+			<div *ngIf="imageUrlField.invalid && imageUrlField.touched" class="alert alert-danger">Please enter image url</div>
+			<div class="form-group mb-3">
+				<label for="category">Category:</label>
+				<select class="form-control" type="text" id="category" name="category" [(ngModel)]="currentDish.category" required #categoryField = "ngModel">
+					<option value="" disabled selected>Select Category</option>
+					<option *ngFor="let categ of (categories$ | async)">{{categ}}</option>
+				</select>
+			</div>
+			<div *ngIf="categoryField.invalid && categoryField.touched" class="alert alert-danger">Please select dish category</div>
+			<div class="form-group mb-3">
+				<label for="label">Label:</label>
+				<select class="form-control" type="text" id="label" name="label" [(ngModel)]="currentDish.label" required #labelField = "ngModel">
+					<option value="" disabled selected>Select Label</option>
+					<option *ngFor="let label_ of (labels$ | async)">{{label_}}</option>
+				</select>
+			</div>
+			<div *ngIf="labelField.invalid && labelField.touched" class="alert alert-danger">Please select dish label</div>
+			<div class="form-group mb-3">
+				<label for="description">Description:</label>
+				<textarea maxlength="100" class="form-control" id="description" name="description" cols="3" [(ngModel)]="currentDish.description" required #descriptionField = "ngModel"></textarea>
+			</div>
+			<div *ngIf="descriptionField.invalid && descriptionField.touched" class="alert alert-danger">Description should be between 1 to 100 words</div>
+			<div class="form-group mb-3">
+				<label for="price">Price:</label>
+				<input min="0" class="form-control" type="number" id="price" name="price" [(ngModel)]="currentDish.price" required #priceField="ngModel">
+			</div>
+			<div *ngIf="priceField.invalid && priceField.touched" class="alert alert-danger">Price should be non negative</div>
+			<button class="form-control btn btn-primary" type="submit">{{btnTitle}}</button>
+		</form>
 	</div>
 </div>

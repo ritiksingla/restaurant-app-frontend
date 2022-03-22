@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { IDish } from './models/IDish';
-import {IUser} from '../user/models/IUser';
-import {IComment} from './models/IComment';
-
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap, map, shareReplay } from 'rxjs/operators';
+import { catchError, shareReplay } from 'rxjs/operators';
+import { IComment } from './models/IComment';
+import { IDish } from './models/IDish';
+
 
 @Injectable({
 	providedIn: 'root'
@@ -22,7 +21,7 @@ export class DishService {
 		catchError(this.handleError)
 	);
 
-	dishes$ = this.http.get<{dishes:IDish[], error: string}>(this.dishUrl).pipe(
+	dishes$ = this.http.get<{ dishes: IDish[], error: string }>(this.dishUrl).pipe(
 		shareReplay(1),
 		catchError(this.handleError)
 	);
@@ -43,10 +42,10 @@ export class DishService {
 		return this.http.put<{ dish: IDish, error: string }>(`${this.dishUrl}/${id}`, dish).pipe(catchError(this.handleError));
 	}
 
-	postComment(dishId: string, userId:string, content:String, rating:number):Observable<{ comment: IComment, error: string}> {
-		return this.http.post<{ comment: IComment, error: string }>(`${this.dishUrl}/${dishId}/comment`, {userId, rating, content}).pipe(catchError(this.handleError));
+	postComment(dishId: string, userId: string, content: String, rating: number): Observable<{ comment: IComment, error: string }> {
+		return this.http.post<{ comment: IComment, error: string }>(`${this.dishUrl}/${dishId}/comment`, { userId, rating, content }).pipe(catchError(this.handleError));
 	}
-	deleteComment(dishId: string):Observable<{ comment: IComment, error: string}> {
+	deleteComment(dishId: string): Observable<{ comment: IComment, error: string }> {
 		return this.http.delete<{ comment: IComment, error: string }>(`${this.dishUrl}/${dishId}/comment`).pipe(catchError(this.handleError));
 	}
 

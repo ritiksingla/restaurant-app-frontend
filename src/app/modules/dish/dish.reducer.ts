@@ -1,8 +1,8 @@
-import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as AppState from '../../app.state';
-import { IDish } from './models/IDish';
 import { IUser } from '../user/models/IUser';
 import * as DishAction from './dish.action';
+import { IDish } from './models/IDish';
 
 export interface DishState {
 	listFilter: string;
@@ -31,7 +31,7 @@ const emptyDish: IDish = {
 	description: '',
 	averageRating: 0,
 	user: emptyUser,
-	comments:[]
+	comments: []
 };
 
 const initialDishState: DishState = {

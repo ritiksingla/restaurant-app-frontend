@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { DishService } from './dish.service';
-import * as DishAction from './dish.action';
 import { of } from 'rxjs';
-import { map, mergeMap, catchError, tap, concatMap } from 'rxjs/operators';
+import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
+import * as DishAction from './dish.action';
+import { DishService } from './dish.service';
 
 /*
 	- Higher order observables (Observable<Observable<?>>) 
@@ -27,13 +27,13 @@ import { map, mergeMap, catchError, tap, concatMap } from 'rxjs/operators';
 @Injectable()
 export class DishEffect {
 	constructor(private actions$: Actions, private dishService: DishService) { }
-	
+
 	loadDishes$ = createEffect(() => this.actions$.pipe(
 		ofType(DishAction.loadDishes),
 		mergeMap(() => this.dishService.dishes$.pipe(
 			map(res => {
 				if (res.error.length > 0) {
-					return DishAction.loadDishesError({error: res.error});
+					return DishAction.loadDishesError({ error: res.error });
 				}
 				return DishAction.loadDishesSuccess({ dishes: res.dishes });
 			}),
@@ -46,7 +46,7 @@ export class DishEffect {
 		concatMap(action => this.dishService.putDish(action._id, action.updatedDish).pipe(
 			map(res => {
 				if (res.error.length > 0) {
-					return DishAction.updateDishError({error: res.error});
+					return DishAction.updateDishError({ error: res.error });
 				}
 				return DishAction.updateDishSuccess({ dish: res.dish });
 			}),
@@ -59,7 +59,7 @@ export class DishEffect {
 		concatMap(action => this.dishService.postDish(action.newDish).pipe(
 			map(res => {
 				if (res.error.length > 0) {
-					return DishAction.addDishError({error: res.error});
+					return DishAction.addDishError({ error: res.error });
 				}
 				return DishAction.addDishSuccess({ dish: res.dish });
 			}),
@@ -72,9 +72,9 @@ export class DishEffect {
 		concatMap(action => this.dishService.deleteDish(action.id).pipe(
 			map(res => {
 				if (res.error.length > 0) {
-					return DishAction.deleteDishError({error: res.error});
+					return DishAction.deleteDishError({ error: res.error });
 				}
-				return DishAction.deleteDishSuccess({dish: res.dish});
+				return DishAction.deleteDishSuccess({ dish: res.dish });
 			}),
 			catchError(error => of(DishAction.deleteDishError({ error })))
 		))

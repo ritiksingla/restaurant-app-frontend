@@ -1,6 +1,6 @@
-import { createReducer, on, createFeatureSelector, createSelector} from '@ngrx/store';
-import { IUser } from './models/IUser';
+import { createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
 import * as AppState from 'src/app/app.state';
+import { IUser } from './models/IUser';
 import * as UserActions from './user.action';
 
 export interface UserState {
@@ -35,7 +35,7 @@ const initialState: UserState = {
 	jwt_token: '',
 	authenticated: false,
 	current_user: emptyUser,
-	error:''
+	error: ''
 };
 
 export const userReducer = createReducer<UserState>(
@@ -45,7 +45,7 @@ export const userReducer = createReducer<UserState>(
 			jwt_token: action.jwt,
 			current_user: action.user,
 			authenticated: true,
-			error:''
+			error: ''
 		};
 	}),
 	on(UserActions.loginUserError, (state, action): UserState => {

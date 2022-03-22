@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import {Store} from '@ngrx/store';
-import {State} from '../../app.state';
+import { Store } from '@ngrx/store';
+import { State } from '../../app.state';
 
 @Component({
 	templateUrl: './welcome.component.html',

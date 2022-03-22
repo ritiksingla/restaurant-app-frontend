@@ -1,56 +1,48 @@
- <div class="container">
-	<div 
-	class="row mb-2"
-	>
-		<div class="col-md-2">Find by name:</div>
-		<div class="col-md-4">
-			<input class="form-control" type="text"
-			[(ngModel)]='listFilter'
-			>
-		</div>
+<div  class="row mb-2">
+	<div class="col-md-2">Find by name:</div>
+	<div class="col-md-4">
+		<input class="form-control" type="text" (input)="onFilterChange($event)">
 	</div>
-	<div *ngIf = "filteredDishes$ | async as filteredDishes" class="table-responsive">
-		<table class="table"
+</div>
+<div *ngIf = "filteredDishes$ | async as filteredDishes" class="table-responsive">
+	<table class="table"
 		[ngClass]="{
-			'table-dark': darkTheme
+		'table-dark': darkTheme
 		}"
 		>
-			<thead>
-				<tr [ngClass]="{
-					'table-light': darkTheme == false,
-					'table-dark': darkTheme
+		<thead>
+			<tr [ngClass]="{
+				'table-light': darkTheme == false,
+				'table-dark': darkTheme
 				}">
-					<th>Dish</th>
-					<th>Name</th>
-					<th>Category</th>
-					<th>Price</th>
-					<th>Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr
+				<th>Dish</th>
+				<th>Name</th>
+				<th>Category</th>
+				<th>Price</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr
 				style="cursor: pointer;"
 				*ngFor="let dish of filteredDishes"
 				(click)="onDishClicked(dish)">
-					<td>
-						<img [src]='dish.imageUrl'
-						[title]='dish.name'
-						class="img-fluid"
-						style="width: 25%;"
-						>
-					</td>
-					<td>{{dish.name | uppercase}}</td>
-					<td>{{dish.category | capitalize}}</td>
-					<td>{{dish.price | currency:'USD':'symbol':'1.2-2'}}</td>
-					<td>{{dish.description}}</td>
-					<!-- <td>
+				<td>
+					<img [src]='dish.imageUrl'
+					[title]='dish.name'
+					class="img-fluid img-thumbnail">
+				</td>
+				<td>{{dish.name | uppercase}}</td>
+				<td>{{dish.category | capitalize}}</td>
+				<td>{{dish.price | currency:'USD':'symbol':'1.2-2'}}</td>
+				<td>{{dish.description}}</td>
+				<!-- <td>
 						<app-star
-						[rating]='dish.averageRating'
-						>
+							[rating]='dish.averageRating'
+							>
 						</app-star>
-					</td> -->
-				</tr>
-			</tbody>
-		</table>
-	</div>
+				</td> -->
+			</tr>
+		</tbody>
+	</table>
 </div>

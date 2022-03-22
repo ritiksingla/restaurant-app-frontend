@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import {
+	ActivatedRouteSnapshot, CanActivate, CanDeactivate,
+	Router, RouterStateSnapshot, UrlTree
+} from '@angular/router';
 import { Observable } from 'rxjs';
+import { AddDishComponent } from './components/add-dish/add-dish.component';
 
 @Injectable({
 	providedIn: 'root'
@@ -10,9 +14,21 @@ export class DishGuard implements CanActivate {
 	canActivate(
 		route: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-		if(localStorage.getItem('jwt') !== null) {
-			return true;
+		return !!localStorage.getItem('jwt');
+	}
+}
+
+@Injectable({
+	providedIn: 'root'
+})
+export class DishEditGuard implements CanDeactivate<AddDishComponent> {
+	canDeactivate(component: AddDishComponent,
+		currentRoute: ActivatedRouteSnapshot,
+		currentState: RouterStateSnapshot,
+		nextState?: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
+		if (component.isDirty) {
+			return confirm(`Navigate away and lose all changes made?`);
 		}
-		return false;
+		return true;
 	}
 }

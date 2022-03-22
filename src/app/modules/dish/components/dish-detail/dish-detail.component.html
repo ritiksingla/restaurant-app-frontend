@@ -1,24 +1,24 @@
-<div class="container mt-5" *ngIf="dishCommentsWithAuthors$ | async as dish">
+<div class="mt-5" *ngIf="dishCommentsWithAuthors$ | async as dish">
 	<div [ngClass] = "{
 		'bg-dark text-light': darkTheme
-	}"
-	class="card mb-3" style="width: 60%;">
+		}"
+		class="card mb-3" style="width: 60%;">
 		<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
 			<button
 			[ngClass] = "{
-				'btn-outline-light': darkTheme,
-				'btn-outline-secondary': darkTheme == false
+			'btn-outline-light': darkTheme,
+			'btn-outline-secondary': darkTheme == false
 			}"
-			 class="btn" (click)='onBack()'>
-				<i class="fa fa-chevron-left"></i>
+			class="btn" (click)='onBack()'>
+			<i class="fa fa-chevron-left"></i>
 			</button>
 			<span class="badge rounded-pill bg-info p-3">{{dish.label | lowercase}}</span>
 			<span class="badge rounded-pill bg-info p-3">{{dish.category | lowercase}}</span>
 			<button *ngIf="currentUser._id==dish.user._id" class="btn btn-outline-info" (click)='onEdit(dish)'>
-				<i class="fa fa-edit"></i>
+			<i class="fa fa-edit"></i>
 			</button>
 			<button *ngIf="currentUser._id==dish.user._id" class="btn btn-outline-danger" (click)='onDelete(dish?._id)'>
-				<i class="fa fa-trash"></i>
+			<i class="fa fa-trash"></i>
 			</button>
 		</div>
 		<img [src]="dish.imageUrl" class="card-img-top">
@@ -43,11 +43,11 @@
 			<div *ngFor="let comment of dish.comments" [ngClass] = "{'bg-dark text-light': darkTheme}" class="card mb-3">
 				<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
 					<button *ngIf="currentUser._id==comment.author._id" class="btn btn-outline-info" (click)='onEditComment(comment)'>
-						<i class="fa fa-edit"></i>
+					<i class="fa fa-edit"></i>
 					</button>
 					<span>- {{comment.author.first_name | capitalize}} {{comment.author.last_name | capitalize}}</span>
 					<button *ngIf="currentUser._id==comment.author._id" class="btn btn-outline-danger" (click)='onDeleteComment(comment)'>
-						<i class="fa fa-trash"></i>
+					<i class="fa fa-trash"></i>
 					</button>
 				</div>
 				<div class="card-body">

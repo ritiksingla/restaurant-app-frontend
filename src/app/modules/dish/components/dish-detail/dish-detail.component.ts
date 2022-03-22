@@ -1,18 +1,18 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-
 import { Store } from '@ngrx/store';
-import { Observable, of, combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { IDish } from '../../models/IDish';
-import { IComment } from '../../models/IComment';
 import { IUser } from '../../../user/models/IUser';
-import { DishService } from '../../dish.service';
 import { UserService } from '../../../user/user.service';
-import * as DishReducer from '../../dish.reducer';
 import * as DishActions from '../../dish.action';
+import * as DishReducer from '../../dish.reducer';
+import { DishService } from '../../dish.service';
+import { IComment } from '../../models/IComment';
+import { IDish } from '../../models/IDish';
+
+
 
 @Component({
 	templateUrl: './dish-detail.component.html'
@@ -70,21 +70,17 @@ export class DishDetailComponent implements OnInit {
 	}
 	addComment(dish: IDish): void {
 		if (this.comment_content.length > 0 && dish._id) {
-			this.dishService.postComment(dish._id, String(this.currentUser._id), this.comment_content, this.comment_rating).subscribe(
-				res => {
-					window.location.reload();
-				}
-			);
+			this.dishService.postComment(dish._id, String(this.currentUser._id), this.comment_content, this.comment_rating)
+				.subscribe(_ => window.location.reload());
 		}
 	}
 
 	onEditComment(comment: IComment) {
-		
+
 	}
 
 	onDeleteComment(comment: IComment) {
-		this.dishService.deleteComment(String(comment._id)).subscribe(res => {
-			window.location.reload();
-		});
+		this.dishService.deleteComment(String(comment._id))
+			.subscribe(_ => window.location.reload());
 	}
 }

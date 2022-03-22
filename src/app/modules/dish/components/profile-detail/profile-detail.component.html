@@ -1,0 +1,28 @@
+<div class="card" *ngIf="currentUser">
+	<div class="card-body">
+		<div [ngClass] = "{'bg-dark text-light': darkTheme}" class="card">
+			<div class="card-header">Your Dishes</div>
+			<div class="card-body">
+				<ul class="list-group list-group-flush">
+    				<a
+    				*ngFor="let dish of userDishes$ | async"
+    				class="list-group-item list-group-item-action"
+    				[routerLink]="['/menu/', dish._id]">{{dish.name}}</a>
+  				</ul>
+			</div>
+		</div>
+		<div [ngClass] = "{'bg-dark text-light': darkTheme}" class="card mt-3">
+			<div class="card-header">Your Comments</div>
+			<div class="card-body">
+				<ul class="list-group list-group-flush">
+    				<li
+    				*ngFor="let comment of userComments$ | async"
+    				class="list-group-item list-group-item-action">{{comment.content}} <app-star
+					[rating]='comment.rating'
+					>
+				</app-star></li>
+  				</ul>
+			</div>
+		</div>
+	</div>
+</div>

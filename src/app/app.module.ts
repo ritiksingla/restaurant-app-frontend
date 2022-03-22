@@ -1,24 +1,23 @@
 // External and core modules
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+// import {appReducer} from './app.state';
+// ngrx/effects
+import { EffectsModule } from '@ngrx/effects';
+// ngrx/store
+import { StoreModule } from '@ngrx/store';
 // User defined modules and components
 import { AppComponent } from './app.component';
+// middlewares
+import { AuthInterceptor } from './auth.interceptor';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { DishModule } from './modules/dish/dish.module';
 import { UserModule } from './modules/user/user.module';
 
-// middlewares
-import {AuthInterceptor} from './auth.interceptor';
 
-// ngrx/store
-import { StoreModule } from '@ngrx/store';
-// import {appReducer} from './app.state';
 
-// ngrx/effects
-import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
 	declarations: [
@@ -38,7 +37,7 @@ import { EffectsModule } from '@ngrx/effects';
 		StoreModule.forRoot({}),
 		EffectsModule.forRoot([])
 	],
-	providers:[{
+	providers: [{
 		provide: HTTP_INTERCEPTORS,
 		useClass: AuthInterceptor,
 		multi: true

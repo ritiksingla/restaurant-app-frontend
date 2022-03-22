@@ -1,14 +1,13 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-	token: string='';
+	token: string = '';
 	constructor() {
 		let token = localStorage.getItem('jwt');
-		if(token !== null) {
+		if (token !== null) {
 			this.token = token;
 		} else {
 			this.token = '';

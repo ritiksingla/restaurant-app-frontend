@@ -1,6 +1,5 @@
 import {
-	createAction, createReducer, on, props,
-	createFeatureSelector, createSelector
+	createFeatureSelector
 } from '@ngrx/store';
 
 interface AppState {
