@@ -1,1 +1,57 @@
-<p>profile-edit works!</p>
+<mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
+  <mat-card-title>User Settings</mat-card-title>
+  <mat-card-content>
+    <form #updatedUser="ngForm" (ngSubmit)="onSubmit(updatedUser)">
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          maxlength="20"
+          type="text"
+          id="first_name"
+          name="first_name"
+          [(ngModel)]="currentUser.first_name"
+          required
+          #firstNameField="ngModel"
+        />
+        <mat-error *ngIf="firstNameField.invalid && firstNameField.touched">
+          FirstName should be between 1-20 characters long
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          maxlength="20"
+          type="text"
+          id="last_name"
+          name="last_name"
+          [(ngModel)]="currentUser.last_name"
+          required
+          #lastNameField="ngModel"
+        />
+        <mat-error *ngIf="lastNameField.invalid && lastNameField.touched">
+          LastName should be between 1-20 characters long
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          maxlength="20"
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="currentUser.email"
+          required
+          #emailField="ngModel"
+        />
+        <mat-error *ngIf="emailField.invalid && emailField.touched">
+          Please enter email
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>

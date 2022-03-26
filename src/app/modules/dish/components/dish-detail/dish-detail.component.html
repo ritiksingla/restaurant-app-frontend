@@ -1,78 +1,131 @@
 <div class="mt-5" *ngIf="dishCommentsWithAuthors$ | async as dish">
-	<div [ngClass] = "{
-		'bg-dark text-light': darkTheme
-		}"
-		class="card mb-3" style="width: 60%;">
-		<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
-			<button
-			[ngClass] = "{
-			'btn-outline-light': darkTheme,
-			'btn-outline-secondary': darkTheme == false
-			}"
-			class="btn" (click)='onBack()'>
-			<i class="fa fa-chevron-left"></i>
-			</button>
-			<span class="badge rounded-pill bg-info p-3">{{dish.label | lowercase}}</span>
-			<span class="badge rounded-pill bg-info p-3">{{dish.category | lowercase}}</span>
-			<button *ngIf="currentUser._id==dish.user._id" class="btn btn-outline-info" (click)='onEdit(dish)'>
-			<i class="fa fa-edit"></i>
-			</button>
-			<button *ngIf="currentUser._id==dish.user._id" class="btn btn-outline-danger" (click)='onDelete(dish?._id)'>
-			<i class="fa fa-trash"></i>
-			</button>
-		</div>
-		<img [src]="dish.imageUrl" class="card-img-top">
-		<div class="card-body">
-			<h4 class="card-title">{{dish.name | uppercase}}</h4>
-			<h5 class="card-subtitle mb-2 text-muted">{{dish.category | capitalize}}</h5>
-			<p class="card-text">{{dish.description}}</p>
-			<p class="card-subtitle text-muted">by - {{dish.user.first_name}}</p>
-		</div>
-		<div class="card-footer">
-			<div class="d-flex justify-content-between">
-				<span>{{dish.price | currency:'USD':'symbol':'1.2-2'}}</span>
-				<app-star
-					[rating]='dish.averageRating'
-					>
-				</app-star>
-			</div>
-		</div>
-	</div>
-	<div>
-		<div *ngIf="dish.comments.length">
-			<div *ngFor="let comment of dish.comments" [ngClass] = "{'bg-dark text-light': darkTheme}" class="card mb-3">
-				<div class="card-header d-flex gap-2 align-items-baseline justify-content-between">
-					<button *ngIf="currentUser._id==comment.author._id" class="btn btn-outline-info" (click)='onEditComment(comment)'>
-					<i class="fa fa-edit"></i>
-					</button>
-					<span>- {{comment.author.first_name | capitalize}} {{comment.author.last_name | capitalize}}</span>
-					<button *ngIf="currentUser._id==comment.author._id" class="btn btn-outline-danger" (click)='onDeleteComment(comment)'>
-					<i class="fa fa-trash"></i>
-					</button>
-				</div>
-				<div class="card-body">
-					<p class="card-text">{{comment.content}}</p>
-					<div class="d-flex justify-content-between align-items-baseline">
-						<p class="card-text">{{comment.createdAt | date:'medium'}}</p>
-						<app-star [rating]='comment.rating'>
-						</app-star>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div [ngClass] = "{'bg-dark text-light': darkTheme}" class="card">
-			<div class="card-header">Make Comment</div>
-			<div class="card-body">
-				<div class="form-group mb-3">
-					<label for="comment_content">Content:</label>
-					<textarea class="form-control" id="comment_content" name="comment_content" cols="2" [(ngModel)]="comment_content" required></textarea>
-				</div>
-				<div class="form-group mb-3">
-					<label for="comment_rating">Rating:</label>
-					<input class="form-control" id="comment_rating" name="comment_rating" [(ngModel)]="comment_rating" type="number" max="5" min="1" required>
-				</div>
-				<button (click)="addComment(dish)" class="btn btn-primary">POST</button>
-			</div>
-		</div>
-	</div>
+  <!-- dish -->
+  <mat-card
+    [ngClass]="{
+      'bg-dark text-light': darkTheme,
+      'mb-3': true
+    }"
+    style="max-width: 400px;"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ dish.name | uppercase }}</mat-card-title>
+      <mat-card-subtitle>{{ dish.category | uppercase }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="dish.imageUrl" />
+    <mat-card-content>
+      <p>{{ dish.description }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-button
+        color="primary"
+        aria-label="navigate back icon"
+        (click)="onBack()"
+      >
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+      <button
+        *ngIf="currentUser._id == dish.user._id"
+        mat-button
+        color="warn"
+        aria-label="delete dish icon"
+        (click)="onDelete(dish?._id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        *ngIf="currentUser._id == dish.user._id"
+        mat-button
+        color="primary"
+        aria-label="edit dish icon"
+        (click)="onEdit(dish)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-actions>
+    <!-- <mat-card-footer>
+      <div class="d-flex justify-content-between">
+        <span>{{ dish.price | currency: 'USD':'symbol':'1.2-2' }}</span>
+      </div>
+    </mat-card-footer> -->
+  </mat-card>
+
+  <!-- comments -->
+  <div>
+    <!-- previous comments -->
+    <div *ngIf="dish.comments.length">
+      <mat-card
+        *ngFor="let comment of dish.comments"
+        [ngClass]="{ 'bg-dark text-light': darkTheme }"
+        class="mb-3"
+      >
+        <mat-card-header class="d-flex justify-content-around">
+          <button
+            mat-button
+            *ngIf="currentUser._id == comment.author._id"
+            color="primary"
+            (click)="onEditComment(comment)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <mat-card-subtitle
+            >by {{ comment.author.first_name | capitalize }}
+            {{ comment.author.last_name | capitalize }}
+          </mat-card-subtitle>
+          <button
+            mat-button
+            *ngIf="currentUser._id == comment.author._id"
+            color="warn"
+            (click)="onDeleteComment(comment)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ comment.content }}</p>
+          <div class="d-flex justify-content-between align-items-baseline">
+            <p>{{ comment.createdAt | date: 'medium' }}</p>
+            <app-star matBadge="{{ comment.rating }}" [rating]="comment.rating">
+            </app-star>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- new comment -->
+    <mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
+      <mat-card-title>Make Comment </mat-card-title>
+      <mat-card-content>
+        <mat-form-field style="width: 100%;" appearance="fill">
+          <mat-label>Content</mat-label>
+          <textarea
+            matInput
+            id="comment_content"
+            name="comment_content"
+            [(ngModel)]="comment_content"
+            required
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field style="width: 100%;" appearance="fill">
+          <mat-label>Rating</mat-label>
+          <mat-select
+            matNativeControl
+            required
+            id="comment_rating"
+            name="comment_rating"
+            [(ngModel)]="comment_rating"
+          >
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="5">5</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button (click)="addComment(dish)" color="primary">
+          POST
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

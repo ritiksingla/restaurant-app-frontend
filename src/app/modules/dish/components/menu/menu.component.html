@@ -1,48 +1,37 @@
-<div  class="row mb-2">
-	<div class="col-md-2">Find by name:</div>
-	<div class="col-md-4">
-		<input class="form-control" type="text" (input)="onFilterChange($event)">
-	</div>
+<div class="row mb-2">
+  <div class="col-md-2">Find by name:</div>
+  <div class="col-md-4">
+    <input class="form-control" type="text" (input)="onFilterChange($event)" />
+  </div>
 </div>
-<div *ngIf = "filteredDishes$ | async as filteredDishes" class="table-responsive">
-	<table class="table"
-		[ngClass]="{
-		'table-dark': darkTheme
-		}"
-		>
-		<thead>
-			<tr [ngClass]="{
-				'table-light': darkTheme == false,
-				'table-dark': darkTheme
-				}">
-				<th>Dish</th>
-				<th>Name</th>
-				<th>Category</th>
-				<th>Price</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr
-				style="cursor: pointer;"
-				*ngFor="let dish of filteredDishes"
-				(click)="onDishClicked(dish)">
-				<td>
-					<img [src]='dish.imageUrl'
-					[title]='dish.name'
-					class="img-fluid img-thumbnail">
-				</td>
-				<td>{{dish.name | uppercase}}</td>
-				<td>{{dish.category | capitalize}}</td>
-				<td>{{dish.price | currency:'USD':'symbol':'1.2-2'}}</td>
-				<td>{{dish.description}}</td>
-				<!-- <td>
-						<app-star
-							[rating]='dish.averageRating'
-							>
-						</app-star>
-				</td> -->
-			</tr>
-		</tbody>
-	</table>
-</div>
+
+<table
+  mat-table
+  [dataSource]="filteredDishes$"
+  class="mat-elevation-z8"
+  style="width: 100%;"
+>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>Category</th>
+    <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>Price</th>
+    <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>Description</th>
+    <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    (click)="onDishClicked(row)"
+  ></tr>
+</table>

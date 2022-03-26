@@ -1,35 +1,68 @@
-<nav [ngClass]="{
-	'navbar navbar-expand mb-3': true,
-	'navbar-light bg-light': (darkTheme == false),
-	'navbar-dark bg-dark' : darkTheme
-	}">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" routerLink='/welcome'>{{pageTitle}}</a>
-		</div>
-		<ul class="nav nav-pills align-items-baseline">
-			<li class="nav-item">
-				<a class="nav-link" [routerLink]="auth ? ['/menu'] : ['/user/login']" routerLinkActive="active"
-				[routerLinkActiveOptions] = "{exact:true}"
-				>{{auth?'Menu':'Login'}}
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" [routerLink]="auth ? ['/menu/add'] : ['/user/register']" routerLinkActive="active">
-					{{auth?'Add Dish':'Register'}}
-				</a>
-			</li>
-			<li *ngIf="auth" class="nav-item">
-				<a class="nav-link" routerLink="/profile" routerLinkActive="active">
-					Profile
-				</a>
-			</li>
-			<li class="nav-item">
-				<a style="cursor: pointer;" (click) = "onClick()" class="nav-link fa fa-sun-o"></a>
-			</li>
-		</ul>
-	</div>
+<nav
+  [ngClass]="{
+    'navbar navbar-expand mb-3': true,
+    'navbar-light bg-light': darkTheme == false,
+    'navbar-dark bg-dark': darkTheme
+  }"
+>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/welcome">{{ pageTitle }}</a>
+    </div>
+    <ul
+      class="
+        list-unstyled
+        d-flex
+        justify-content-between
+        align-items-baseline
+        gap-5
+      "
+    >
+      <li>
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="auth ? ['/menu'] : ['/user/login']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-icon *ngIf="auth">menu</mat-icon>
+          <mat-icon *ngIf="!auth">login</mat-icon>
+        </button>
+      </li>
+      <li>
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="auth ? ['/menu/add'] : ['/user/register']"
+          routerLinkActive="active"
+        >
+          <mat-icon *ngIf="auth">add_circle</mat-icon>
+          <mat-icon *ngIf="!auth">app_registration</mat-icon>
+        </button>
+      </li>
+      <li *ngIf="auth">
+        <button
+          mat-icon-button
+          color="primary"
+          routerLink="/profile"
+          routerLinkActive="active"
+          aria-label="Example icon button with a home icon"
+        >
+          <mat-icon>settings</mat-icon>
+        </button>
+      </li>
+      <li class="nav-item">
+        <mat-slide-toggle
+          color="primary"
+          class="text-primary"
+          (change)="onThemeChange($event.checked)"
+          >Dark Theme</mat-slide-toggle
+        >
+      </li>
+    </ul>
+  </div>
 </nav>
 <div class="container">
-	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

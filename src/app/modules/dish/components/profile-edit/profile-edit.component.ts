@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+// angular
+import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
+// angular redux
+import { Store } from '@ngrx/store';
+import * as DishReducer from '../../dish.reducer';
+
+// models
+import { IUser } from '../../../user/models/IUser';
 
 @Component({
-  selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
-  styleUrls: ['./profile-edit.component.css']
 })
-export class ProfileEditComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class ProfileEditComponent {
+  currentUser!: IUser;
+  get darkTheme(): boolean {
+    return localStorage.getItem('theme') === 'dark';
+  }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private store: Store<DishReducer.State>
+  ) {
+    let user = localStorage.getItem('user');
+    if (user) {
+      this.currentUser = JSON.parse(user);
+    }
   }
 
+  onSubmit(f: NgForm) {}
 }
