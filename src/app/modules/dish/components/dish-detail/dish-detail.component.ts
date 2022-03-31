@@ -37,7 +37,7 @@ export class DishDetailComponent implements OnInit {
   }
 
   constructor(
-    private _location: Location,
+    private location: Location,
     private dishService: DishService,
     private router: Router,
     private store: Store<DishReducer.State>,
@@ -73,7 +73,7 @@ export class DishDetailComponent implements OnInit {
   onBack(): void {
     // make another request instead of actual back
     // this.router.navigate(['/menu'])
-    this._location.back();
+    this.location.back();
   }
   onDelete(id?: string): void {
     this.store.dispatch(DishActions.deleteDish({ id: String(id) }));

@@ -1,7 +1,7 @@
 // angular
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 // angular redux
 import { Store } from '@ngrx/store';
@@ -79,27 +79,27 @@ export class AddDishComponent implements OnInit {
   ngOnInit(): void {
     if (this.route.snapshot.queryParamMap.keys.length > 0) {
       this.btnTitle = 'Update';
-      let Map = this.route.snapshot.queryParamMap;
-      if (Map.has('_id')) {
-        this.currentDish._id = String(Map.get('_id'));
+      let paramMap: ParamMap = this.route.snapshot.queryParamMap;
+      if (paramMap.has('_id')) {
+        this.currentDish._id = String(paramMap.get('_id'));
       }
-      if (Map.has('name')) {
-        this.currentDish.name = String(Map.get('name'));
+      if (paramMap.has('name')) {
+        this.currentDish.name = String(paramMap.get('name'));
       }
-      if (Map.has('imageUrl')) {
-        this.currentDish.imageUrl = String(Map.get('imageUrl'));
+      if (paramMap.has('imageUrl')) {
+        this.currentDish.imageUrl = String(paramMap.get('imageUrl'));
       }
-      if (Map.has('description')) {
-        this.currentDish.description = String(Map.get('description'));
+      if (paramMap.has('description')) {
+        this.currentDish.description = String(paramMap.get('description'));
       }
-      if (Map.has('category')) {
-        this.currentDish.category = String(Map.get('category'));
+      if (paramMap.has('category')) {
+        this.currentDish.category = String(paramMap.get('category'));
       }
-      if (Map.has('label')) {
-        this.currentDish.label = String(Map.get('label'));
+      if (paramMap.has('label')) {
+        this.currentDish.label = String(paramMap.get('label'));
       }
-      if (Map.has('price')) {
-        this.currentDish.price = Number(Map.get('price'));
+      if (paramMap.has('price')) {
+        this.currentDish.price = Number(paramMap.get('price'));
       }
     }
   }
