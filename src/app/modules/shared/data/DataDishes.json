@@ -1,0 +1,67 @@
+{
+   "dishes":[
+      {
+         "_id":"623bec4fad952f151b6b95c9",
+         "name":"Pepperoni Pizza",
+         "imageUrl":"https://as2.ftcdn.net/v2/jpg/02/55/57/33/1000_F_255573369_NrbcMNYC1hz1xJigxCOCN8OXsxmtx0TB.jpg",
+         "category":"chineese",
+         "label":"veg",
+         "price":4.99,
+         "description":"Vegetable pepperoni pizza",
+         "averageRating":0,
+         "user":{
+            "_id":"623beac7ad952f151b6b95bb",
+            "email":"huabiao@gmail.com",
+            "first_name":"Hua",
+            "last_name":"Biao",
+            "password":"$2a$10$lGTVFJ7jaQtoZB.38fmHZuqsohMFsEJjt2ShQLFYg87Yg1Bh56.Sy"
+         },
+         "comments":[
+            {
+               "_id":"623c34af0557e563edbf5c4e",
+               "rating":5,
+               "content":"Thank you",
+               "author":"623beac7ad952f151b6b95bb",
+               "dish":"623bec4fad952f151b6b95c9",
+               "createdAt":"2022-03-24T09:06:55.022Z"
+            },
+            {
+               "_id":"623c44e9bbd811d0665dbe44",
+               "rating":3,
+               "content":"Best momos",
+               "author":"623beac7ad952f151b6b95bb",
+               "dish":"623bec4fad952f151b6b95c9",
+               "createdAt":"2022-03-24T10:16:09.637Z"
+            },
+            {
+               "_id":"623f435518b7a4262d679d7b",
+               "rating":4,
+               "content":"Lovely",
+               "author":"6234d0a0f4f1534fdca8eae2",
+               "dish":"623bec4fad952f151b6b95c9",
+               "createdAt":"2022-03-26T16:46:13.686Z"
+            }
+         ]
+      },
+      {
+         "_id":"623beca0ad952f151b6b95d2",
+         "name":"Fruit Cake",
+         "imageUrl":"https://as1.ftcdn.net/v2/jpg/01/01/93/54/1000_F_101935485_MlqTHZQh0luntCgkvmSW6SRpiVFXuTO6.jpg",
+         "category":"cake",
+         "label":"low sugar",
+         "price":6.99,
+         "description":"Low sugar fruit cake.",
+         "averageRating":0,
+         "user":{
+            "_id":"623beac7ad952f151b6b95bb",
+            "email":"huabiao@gmail.com",
+            "first_name":"Hua",
+            "last_name":"Biao",
+            "password":"$2a$10$lGTVFJ7jaQtoZB.38fmHZuqsohMFsEJjt2ShQLFYg87Yg1Bh56.Sy"
+         },
+         "comments":[
+            
+         ]
+      }
+   ]
+}

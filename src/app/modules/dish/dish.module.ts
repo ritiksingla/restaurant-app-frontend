@@ -26,23 +26,23 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
 import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
-  declarations: [
-    MenuComponent,
-    DishDetailComponent,
-    AddDishComponent,
-    Capitalize,
-    ProfileComponent,
-    ProfileDetailComponent,
-    ProfileEditComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    DishRoutingModule,
-    SharedModule,
-    StoreModule.forFeature('dish', dishReducer),
-    EffectsModule.forFeature([DishEffect]),
-  ],
+	declarations: [
+		MenuComponent,
+		DishDetailComponent,
+		AddDishComponent,
+		Capitalize,
+		ProfileComponent,
+		ProfileDetailComponent,
+		ProfileEditComponent,
+	],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		MaterialModule,
+		DishRoutingModule,
+		SharedModule,
+		StoreModule.forFeature('dish', dishReducer),
+		EffectsModule.forFeature([DishEffect]),
+	],
 })
 export class DishModule {}

@@ -1,7 +1,12 @@
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import {
+	ComponentFixture,
+	fakeAsync,
+	flush,
+	TestBed,
+} from '@angular/core/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,7 +18,6 @@ import { SharedModule } from '../../../shared/shared.module';
 import { DishService } from '../../dish.service';
 import { AddDishComponent } from './add-dish.component';
 
-
 class ParamMap {
 	public static keys: Record<string, string>[] = [];
 	public static _index(key: string): number {
@@ -21,53 +25,72 @@ class ParamMap {
 	}
 	public static has(key: string): boolean {
 		return this._index(key) !== -1;
-	};
+	}
 	public static get(key: string): string {
 		let idx = this._index(key);
 		return this.keys[idx].value;
 	}
-};
+}
 
 describe('Add Dish Component', () => {
 	let mockRouter, mockStore;
 	let mockDishService = {
 		categories$: of(['']),
-		labels$: of([''])
+		labels$: of(['']),
 	};
 	let fixture: ComponentFixture<AddDishComponent>;
 	let loader: HarnessLoader;
 
 	let mockActivatedRoute = {
 		snapshot: {
-			queryParamMap: ParamMap
-		}
+			queryParamMap: ParamMap,
+		},
 	};
 	let paramMap: typeof ParamMap = mockActivatedRoute.snapshot.queryParamMap;
 	const emptyUser = {
-		"first_name": '',
-		"last_name": '',
-		"email": '',
-		"password": ''
+		first_name: '',
+		last_name: '',
+		email: '',
+		password: '',
 	};
 	let Dish = {
-		"_id": '1',
-		"name": 'dish1',
-		"imageUrl": 'https://www.images.com/dish1.png',
-		"category": 'pizza',
-		"label": 'spicy',
-		"price": 3.99,
-		"description": 'dish1 pizza spicy',
-		"averageRating": 3.69,
-		"user": emptyUser,
-		"comments": []
+		_id: '1',
+		name: 'dish1',
+		imageUrl: 'https://www.images.com/dish1.png',
+		category: 'pizza',
+		label: 'spicy',
+		price: 3.99,
+		description: 'dish1 pizza spicy',
+		averageRating: 3.69,
+		user: emptyUser,
+		comments: [],
 	};
 	const dishCategories = [
-		'pizza', 'burger', 'sweets', 'seafood', 'chineese', 'italian', 'café',
-		'cake', 'pasta', 'bakery', 'bar', 'sushi'];
+		'pizza',
+		'burger',
+		'sweets',
+		'seafood',
+		'chineese',
+		'italian',
+		'café',
+		'cake',
+		'pasta',
+		'bakery',
+		'bar',
+		'sushi',
+	];
 
 	const dishLabels = [
-		'sweet', 'spicy', 'hot', 'cold', 'low sugar', 'low fat', 'high calories', 'veg', 'non-veg',
-		'best seller'
+		'sweet',
+		'spicy',
+		'hot',
+		'cold',
+		'low sugar',
+		'low fat',
+		'high calories',
+		'veg',
+		'non-veg',
+		'best seller',
 	];
 
 	beforeEach(async () => {
@@ -83,8 +106,8 @@ describe('Add Dish Component', () => {
 				{ provide: Router, useValue: mockRouter },
 				{ provide: Store, useValue: mockStore },
 				{ provide: ActivatedRoute, useValue: mockActivatedRoute },
-				{ provide: DishService, useValue: mockDishService }
-			]
+				{ provide: DishService, useValue: mockDishService },
+			],
 		}).compileComponents();
 		fixture = TestBed.createComponent(AddDishComponent);
 		loader = TestbedHarnessEnvironment.loader(fixture);
@@ -133,7 +156,9 @@ describe('Add Dish Component', () => {
 
 		flush();
 
-		let inputElements: DebugElement[] = fixture.debugElement.queryAll(By.css('input'));
+		let inputElements: DebugElement[] = fixture.debugElement.queryAll(
+			By.css('input')
+		);
 		for (const inputElement of inputElements) {
 			let expectedValue = paramMap.get(inputElement.nativeElement.name);
 			expect(inputElement.nativeElement.value).toEqual(expectedValue);
@@ -145,4 +170,4 @@ describe('Add Dish Component', () => {
 			expect(inputElement.nativeElement.value).toEqual(expectedValue);
 		}
 	}));
-})
+});

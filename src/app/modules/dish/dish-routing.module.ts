@@ -14,33 +14,33 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { DishGuard, DishEditGuard } from './dish.guard';
 
 const dishRoutes: Routes = [
-  {
-    path: 'menu',
-    canActivate: [DishGuard],
-    children: [
-      { path: '', component: MenuComponent },
-      {
-        path: 'add',
-        canDeactivate: [DishEditGuard],
-        component: AddDishComponent,
-      },
-      { path: ':id', component: DishDetailComponent },
-    ],
-  },
-  {
-    path: 'profile',
-    canActivate: [DishGuard],
-    component: ProfileComponent,
-    children: [
-      { path: '', redirectTo: 'detail', pathMatch: 'full' },
-      { path: 'detail', component: ProfileDetailComponent },
-      { path: 'edit', component: ProfileEditComponent },
-    ],
-  },
+	{
+		path: 'menu',
+		canActivate: [DishGuard],
+		children: [
+			{ path: '', component: MenuComponent },
+			{
+				path: 'add',
+				canDeactivate: [DishEditGuard],
+				component: AddDishComponent,
+			},
+			{ path: ':id', component: DishDetailComponent },
+		],
+	},
+	{
+		path: 'profile',
+		canActivate: [DishGuard],
+		component: ProfileComponent,
+		children: [
+			{ path: '', redirectTo: 'detail', pathMatch: 'full' },
+			{ path: 'detail', component: ProfileDetailComponent },
+			{ path: 'edit', component: ProfileEditComponent },
+		],
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(dishRoutes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forChild(dishRoutes)],
+	exports: [RouterModule],
 })
 export class DishRoutingModule {}

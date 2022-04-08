@@ -13,7 +13,7 @@ import { IDish } from '../../models/IDish';
 
 @Component({
 	templateUrl: './menu.component.html',
-	styleUrls: ['./menu.component.css']
+	styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
 	dishes$!: Observable<IDish[]>;
@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private store: Store<DishReducer.State>
-	) { }
+	) {}
 
 	ngOnInit(): void {
 		this.dishes$ = this.store.select(DishReducer.getDishesState);
@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
 			this.listFilterAction$,
 		]).pipe(
 			map(([dishes, filterString]) =>
-				dishes.filter((dish) =>
+				dishes.filter(dish =>
 					dish.name.toLowerCase().includes(filterString.toLowerCase())
 				)
 			)

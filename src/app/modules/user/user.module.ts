@@ -18,14 +18,14 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
-  imports: [
-    UserRoutingModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    SharedModule,
-    StoreModule.forFeature('user', userReducer),
-    EffectsModule.forFeature([UserEffect]),
-  ],
+	declarations: [LoginComponent, RegisterComponent],
+	imports: [
+		UserRoutingModule,
+		BrowserAnimationsModule,
+		MaterialModule,
+		SharedModule,
+		StoreModule.forFeature('user', userReducer),
+		EffectsModule.forFeature([UserEffect]),
+	],
 })
 export class UserModule {}

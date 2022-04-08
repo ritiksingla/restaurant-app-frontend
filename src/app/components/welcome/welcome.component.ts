@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../../app.state';
 
 @Component({
-  templateUrl: './welcome.component.html',
+	templateUrl: './welcome.component.html',
 })
-export class WelcomeComponent implements OnInit {
-  pageTitle = 'Welcome';
-  get darkTheme(): boolean {
-    return localStorage.getItem('theme') === 'dark';
-  }
-  constructor(private store: Store<State>) {}
-  ngOnInit(): void {}
+export class WelcomeComponent {
+	pageTitle = 'Welcome';
+	get darkTheme(): boolean {
+		return localStorage.getItem('theme') === 'dark';
+	}
+	constructor(private store: Store<State>) {}
 }

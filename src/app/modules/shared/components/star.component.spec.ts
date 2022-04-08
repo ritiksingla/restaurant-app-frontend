@@ -1,6 +1,6 @@
 import { StarComponent } from './star.component';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('Star Component', () => {
@@ -8,7 +8,7 @@ describe('Star Component', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			declarations: [StarComponent],
-			schemas: [NO_ERRORS_SCHEMA]
+			schemas: [NO_ERRORS_SCHEMA],
 		});
 		fixture = TestBed.createComponent(StarComponent);
 	});
@@ -25,4 +25,4 @@ describe('Star Component', () => {
 		let debugMask = fixture.debugElement.query(By.css('.mask'));
 		expect(debugMask.nativeElement.style.width).toBe(expectedWidth + 'px');
 	});
-})
+});

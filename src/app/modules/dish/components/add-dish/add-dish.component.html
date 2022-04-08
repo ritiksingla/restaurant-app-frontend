@@ -1,121 +1,124 @@
 <mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
-  <mat-card-title>New Dish</mat-card-title>
-  <mat-card-content>
-    <form #newDishForm="ngForm" (ngSubmit)="onSubmit(newDishForm)">
-      <!-- Dish Name -->
-      <mat-form-field style="width: 100%;" apperance="fill">
-        <mat-label>Name</mat-label>
-        <input
-          matInput
-          maxlength="20"
-          type="text"
-          id="name"
-          name="name"
-          [(ngModel)]="currentDish.name"
-          required
-          #nameField="ngModel"
-        />
-        <mat-error *ngIf="nameField.invalid && nameField.touched">
-          Please enter dish name
-        </mat-error>
-      </mat-form-field>
+	<mat-card-title>New Dish</mat-card-title>
+	<mat-card-content>
+		<form #newDishForm="ngForm" (ngSubmit)="onSubmit(newDishForm)">
+			<!-- Dish Name -->
+			<mat-form-field style="width: 100%" apperance="fill">
+				<mat-label>Name</mat-label>
+				<input
+					matInput
+					maxlength="20"
+					type="text"
+					id="name"
+					name="name"
+					[(ngModel)]="currentDish.name"
+					required
+					#nameField="ngModel" />
+				<mat-error *ngIf="nameField.invalid && nameField.touched">
+					Please enter dish name
+				</mat-error>
+			</mat-form-field>
 
-      <!-- Dish Image -->
-      <mat-form-field style="width: 100%;" apperance="fill">
-        <mat-label>Image URL</mat-label>
-        <input
-          matInput
-          type="text"
-          id="imageUrl"
-          name="imageUrl"
-          [(ngModel)]="currentDish.imageUrl"
-          required
-          #imageUrlField="ngModel"
-        />
-        <mat-error *ngIf="imageUrlField.invalid && imageUrlField.touched">
-          Please enter image url
-        </mat-error>
-      </mat-form-field>
+			<!-- Dish Image -->
+			<mat-form-field style="width: 100%" apperance="fill">
+				<mat-label>Image URL</mat-label>
+				<input
+					matInput
+					type="text"
+					id="imageUrl"
+					name="imageUrl"
+					[(ngModel)]="currentDish.imageUrl"
+					required
+					#imageUrlField="ngModel" />
+				<mat-error
+					*ngIf="imageUrlField.invalid && imageUrlField.touched">
+					Please enter image url
+				</mat-error>
+			</mat-form-field>
 
-      <!-- Category -->
-      <mat-form-field style="width: 100%;" apperance="fill">
-        <mat-label>Category</mat-label>
-        <mat-select
-          type="text"
-          id="category"
-          name="category"
-          [(ngModel)]="currentDish.category"
-          required
-          #categoryField="ngModel"
-        >
-          <mat-option *ngFor="let categ of categories$ | async" value="categ">{{
-            categ
-          }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="categoryField.invalid && categoryField.touched">
-          Please select dish category
-        </mat-error>
-      </mat-form-field>
+			<!-- Category -->
+			<mat-form-field style="width: 100%" apperance="fill">
+				<mat-label>Category</mat-label>
+				<mat-select
+					type="text"
+					id="category"
+					name="category"
+					[(ngModel)]="currentDish.category"
+					required
+					#categoryField="ngModel">
+					<mat-option
+						*ngFor="let categ of categories$ | async"
+						value="categ"
+						>{{ categ }}</mat-option
+					>
+				</mat-select>
+				<mat-error
+					*ngIf="categoryField.invalid && categoryField.touched">
+					Please select dish category
+				</mat-error>
+			</mat-form-field>
 
-      <!-- Label -->
-      <mat-form-field style="width: 100%;" apperance="fill">
-        <mat-label>Label</mat-label>
-        <mat-select
-          type="text"
-          id="mat-label"
-          name="label"
-          [(ngModel)]="currentDish.label"
-          required
-          #labelField="ngModel"
-        >
-          <mat-option *ngFor="let label of labels$ | async" value="label">{{
-            label
-          }}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="labelField.invalid && labelField.touched">
-          Please select dish label
-        </mat-error>
-      </mat-form-field>
+			<!-- Label -->
+			<mat-form-field style="width: 100%" apperance="fill">
+				<mat-label>Label</mat-label>
+				<mat-select
+					type="text"
+					id="mat-label"
+					name="label"
+					[(ngModel)]="currentDish.label"
+					required
+					#labelField="ngModel">
+					<mat-option
+						*ngFor="let label of labels$ | async"
+						value="label"
+						>{{ label }}</mat-option
+					>
+				</mat-select>
+				<mat-error *ngIf="labelField.invalid && labelField.touched">
+					Please select dish label
+				</mat-error>
+			</mat-form-field>
 
-      <!-- Description -->
-      <mat-form-field style="width: 100%;" apperance="fill">
-        <mat-label>Description</mat-label>
-        <textarea
-          matInput
-          maxlength="100"
-          id="description"
-          name="description"
-          [(ngModel)]="currentDish.description"
-          required
-          #descriptionField="ngModel"
-        ></textarea>
-        <mat-error *ngIf="descriptionField.invalid && descriptionField.touched">
-          Description should be between 1 to 100 words
-        </mat-error>
-      </mat-form-field>
+			<!-- Description -->
+			<mat-form-field style="width: 100%" apperance="fill">
+				<mat-label>Description</mat-label>
+				<textarea
+					matInput
+					maxlength="100"
+					id="description"
+					name="description"
+					[(ngModel)]="currentDish.description"
+					required
+					#descriptionField="ngModel"></textarea>
+				<mat-error
+					*ngIf="
+						descriptionField.invalid && descriptionField.touched
+					">
+					Description should be between 1 to 100 words
+				</mat-error>
+			</mat-form-field>
 
-      <!-- Price -->
-      <mat-form-field class="me-3" apperance="fill" floatLabel="always">
-        <mat-label>Price</mat-label>
-        <input
-          matInput
-          class="text-end"
-          type="number"
-          id="price"
-          name="price"
-          [(ngModel)]="currentDish.price"
-          required
-          #priceField="ngModel"
-        />
-        <span matPrefix>$&nbsp;</span>
-        <mat-error *ngIf="priceField.invalid && priceField.touched">
-          Price should be non negative
-        </mat-error>
-      </mat-form-field>
+			<!-- Price -->
+			<mat-form-field class="me-3" apperance="fill" floatLabel="always">
+				<mat-label>Price</mat-label>
+				<input
+					matInput
+					class="text-end"
+					type="number"
+					id="price"
+					name="price"
+					[(ngModel)]="currentDish.price"
+					required
+					#priceField="ngModel" />
+				<span matPrefix>$&nbsp;</span>
+				<mat-error *ngIf="priceField.invalid && priceField.touched">
+					Price should be non negative
+				</mat-error>
+			</mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">
-        {{ btnTitle }}
-      </button>
-    </form>
-  </mat-card-content>
+			<button mat-raised-button color="primary" type="submit">
+				{{ btnTitle }}
+			</button>
+		</form>
+	</mat-card-content>
 </mat-card>

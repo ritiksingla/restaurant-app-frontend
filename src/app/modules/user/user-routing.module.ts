@@ -10,19 +10,19 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 
 const userRoutes: Routes = [
-  {
-    path: 'user',
-    canActivate: [UserGuard],
-    children: [
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-    ],
-  },
+	{
+		path: 'user',
+		canActivate: [UserGuard],
+		children: [
+			{ path: '', redirectTo: 'login', pathMatch: 'full' },
+			{ path: 'login', component: LoginComponent },
+			{ path: 'register', component: RegisterComponent },
+		],
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(userRoutes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forChild(userRoutes)],
+	exports: [RouterModule],
 })
 export class UserRoutingModule {}

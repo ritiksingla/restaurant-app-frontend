@@ -7,8 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './modules/shared/material.module';
 import { SharedModule } from './modules/shared/shared.module';
-import {Directive, Input, HostListener, Component} from '@angular/core';
-
+import { Directive, Input, HostListener, Component } from '@angular/core';
 
 // @Directive({
 // 	selector:'[routerLink]'
@@ -48,14 +47,12 @@ describe('App Component', () => {
 	let mockStore;
 	let fixture: ComponentFixture<AppComponent>;
 
-	beforeEach(async() => {
+	beforeEach(async () => {
 		mockStore = jasmine.createSpyObj(['dispatch']);
 		await TestBed.configureTestingModule({
 			imports: [SharedModule, MaterialModule, RouterTestingModule],
 			declarations: [AppComponent],
-			providers: [
-				{ provide: Store, useValue: mockStore },
-			]
+			providers: [{ provide: Store, useValue: mockStore }],
 		}).compileComponents();
 		fixture = TestBed.createComponent(AppComponent);
 	});
@@ -64,7 +61,7 @@ describe('App Component', () => {
 		fixture.detectChanges();
 		let buttons = fixture.debugElement.queryAll(By.css('button'));
 		expect(buttons.length).toBe(2);
-		
+
 		// let routerLink = buttons[0].query(By.directive(RouterLinkDirectiveStub)).injector.get(RouterLinkDirectiveStub);
 
 		// buttons[0].triggerEventHandler('click', null);

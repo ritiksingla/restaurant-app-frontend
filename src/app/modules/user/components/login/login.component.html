@@ -1,50 +1,49 @@
 <mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
-  <mat-card-title>LOGIN</mat-card-title>
-  <mat-card-content>
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-      <mat-form-field style="width: 100%;" appearance="fill">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          name="email"
-          type="email"
-          id="email"
-          [(ngModel)]="email"
-          required
-          #emailField="ngModel"
-        />
-        <mat-error *ngIf="emailField.invalid && emailField.touched">
-          Email is required
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field style="width: 100%;" appearance="fill">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          minlength="4"
-          name="password"
-          type="password"
-          id="password"
-          [(ngModel)]="password"
-          required
-          #passwordField="ngModel"
-        />
-        <mat-error *ngIf="passwordField.invalid && passwordField.touched">
-          Password should be atleast 4 characters long
-        </mat-error>
-      </mat-form-field>
-      <div
-        *ngIf="error$ | async as error"
-        class="alert alert-danger alert-dismissible"
-      >
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-        ></button>
-        {{ error }}
-      </div>
-      <button mat-raised-button type="submit" color="primary">Login</button>
-    </form>
-  </mat-card-content>
+	<mat-card-title>LOGIN</mat-card-title>
+	<mat-card-content>
+		<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+			<mat-form-field style="width: 100%" appearance="fill">
+				<mat-label>Email</mat-label>
+				<input
+					matInput
+					name="email"
+					type="email"
+					id="email"
+					[(ngModel)]="email"
+					required
+					#emailField="ngModel" />
+				<mat-error *ngIf="emailField.invalid && emailField.touched">
+					Email is required
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field style="width: 100%" appearance="fill">
+				<mat-label>Password</mat-label>
+				<input
+					matInput
+					minlength="4"
+					name="password"
+					type="password"
+					id="password"
+					[(ngModel)]="password"
+					required
+					#passwordField="ngModel" />
+				<mat-error
+					*ngIf="passwordField.invalid && passwordField.touched">
+					Password should be atleast 4 characters long
+				</mat-error>
+			</mat-form-field>
+			<div
+				*ngIf="error$ | async as error"
+				class="alert alert-danger alert-dismissible">
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="alert"></button>
+				{{ error }}
+			</div>
+			<button mat-raised-button type="submit" color="primary">
+				Login
+			</button>
+		</form>
+	</mat-card-content>
 </mat-card>

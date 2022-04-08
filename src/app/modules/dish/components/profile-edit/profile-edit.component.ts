@@ -11,23 +11,23 @@ import * as DishReducer from '../../dish.reducer';
 import { IUser } from '../../../user/models/IUser';
 
 @Component({
-  templateUrl: './profile-edit.component.html',
+	templateUrl: './profile-edit.component.html',
 })
 export class ProfileEditComponent {
-  currentUser!: IUser;
-  get darkTheme(): boolean {
-    return localStorage.getItem('theme') === 'dark';
-  }
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private store: Store<DishReducer.State>
-  ) {
-    let user = localStorage.getItem('user');
-    if (user) {
-      this.currentUser = JSON.parse(user);
-    }
-  }
+	currentUser!: IUser;
+	get darkTheme(): boolean {
+		return localStorage.getItem('theme') === 'dark';
+	}
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private store: Store<DishReducer.State>
+	) {
+		let user = localStorage.getItem('user');
+		if (user) {
+			this.currentUser = JSON.parse(user);
+		}
+	}
 
-  onSubmit(f: NgForm) {}
+	onSubmit(f: NgForm) {}
 }

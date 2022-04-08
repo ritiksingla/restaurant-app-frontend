@@ -6,16 +6,16 @@ import { IUser } from './models/IUser';
 
 // Login User
 export const loginUser = createAction(
-  '[User] login',
-  props<{ email: string; password: string }>()
+	'[User] login',
+	props<{ email: string; password: string }>()
 );
 export const loginUserSuccess = createAction(
-  '[User] login success',
-  props<{ user: IUser; jwt: string }>()
+	'[User] login success',
+	props<{ user: IUser; jwt: string }>()
 );
 export const loginUserError = createAction(
-  '[User] login error',
-  props<{ error: string }>()
+	'[User] login error',
+	props<{ error: string }>()
 );
 
 // Logout user

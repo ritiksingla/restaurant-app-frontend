@@ -1,6 +1,21 @@
 # Restaurant
 
-- Each module has its components, redux store and effects, services, model, and guard protecting routes
+## Install dependencies
+```sh
+npm install
+```
+## Run in dev environment
+```sh
+npm run start
+```
+## Test
+```sh
+npm run test
+```
+## Lint and fix
+```sh
+npm run lint
+```
 
 ## Key learnings to take away
 

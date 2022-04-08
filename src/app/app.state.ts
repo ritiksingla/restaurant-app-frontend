@@ -2,11 +2,11 @@
 import { createFeatureSelector } from '@ngrx/store';
 
 interface AppState {
-  // theme: boolean;
+	// theme: boolean;
 }
 
 export interface State {
-  app: AppState;
+	app: AppState;
 }
 
 const getAppFeatureState = createFeatureSelector<AppState>('app');

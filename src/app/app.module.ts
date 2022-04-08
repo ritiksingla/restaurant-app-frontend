@@ -22,25 +22,25 @@ import { MaterialModule } from './modules/shared/material.module';
 import { AppRoutingModule } from './app-routing.component';
 
 @NgModule({
-  declarations: [AppComponent, WelcomeComponent],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    DishModule,
-    UserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    AppRoutingModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent],
+	declarations: [AppComponent, WelcomeComponent],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		DishModule,
+		UserModule,
+		BrowserAnimationsModule,
+		MaterialModule,
+		AppRoutingModule,
+		StoreModule.forRoot({}),
+		EffectsModule.forRoot([]),
+	],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthInterceptor,
+			multi: true,
+		},
+	],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}
