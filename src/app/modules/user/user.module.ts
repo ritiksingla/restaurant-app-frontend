@@ -1,6 +1,7 @@
 // angular
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // ngrx
 import { EffectsModule } from '@ngrx/effects';
@@ -20,6 +21,7 @@ import { RegisterComponent } from './components/register/register.component';
 @NgModule({
 	declarations: [LoginComponent, RegisterComponent],
 	imports: [
+		ReactiveFormsModule,
 		UserRoutingModule,
 		BrowserAnimationsModule,
 		MaterialModule,

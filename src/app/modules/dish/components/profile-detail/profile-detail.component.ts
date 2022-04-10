@@ -13,15 +13,15 @@ import { map } from 'rxjs/operators';
 // models
 import { IUser } from '../../../user/models/IUser';
 import { IComment } from '../../models/IComment';
-import { IDish } from '../../models/IDish';
+import { IDishWithUserAndComments } from '../../models/IDish';
 
 @Component({
 	templateUrl: './profile-detail.component.html',
 })
 export class ProfileDetailComponent implements OnInit {
 	currentUser!: IUser;
-	dishes$!: Observable<IDish[]>;
-	userDishes$!: Observable<IDish[]>;
+	dishes$!: Observable<IDishWithUserAndComments[]>;
+	userDishes$!: Observable<IDishWithUserAndComments[]>;
 	userComments$!: Observable<IComment[]>;
 
 	get darkTheme(): boolean {

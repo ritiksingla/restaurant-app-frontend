@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // ngrx
 import { StoreModule } from '@ngrx/store';
@@ -40,6 +41,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 		BrowserAnimationsModule,
 		MaterialModule,
 		DishRoutingModule,
+		ReactiveFormsModule,
 		SharedModule,
 		StoreModule.forFeature('dish', dishReducer),
 		EffectsModule.forFeature([DishEffect]),

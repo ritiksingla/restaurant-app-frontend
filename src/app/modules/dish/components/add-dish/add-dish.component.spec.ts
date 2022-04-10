@@ -17,6 +17,8 @@ import { MaterialModule } from '../../../shared/material.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { DishService } from '../../dish.service';
 import { AddDishComponent } from './add-dish.component';
+import DataDishes from '../../../shared/data/DataDishes.json';
+import DataUsers from '../../../shared/data/DataUsers.json';
 
 class ParamMap {
 	public static keys: Record<string, string>[] = [];
@@ -47,24 +49,7 @@ describe('Add Dish Component', () => {
 		},
 	};
 	let paramMap: typeof ParamMap = mockActivatedRoute.snapshot.queryParamMap;
-	const emptyUser = {
-		first_name: '',
-		last_name: '',
-		email: '',
-		password: '',
-	};
-	let Dish = {
-		_id: '1',
-		name: 'dish1',
-		imageUrl: 'https://www.images.com/dish1.png',
-		category: 'pizza',
-		label: 'spicy',
-		price: 3.99,
-		description: 'dish1 pizza spicy',
-		averageRating: 3.69,
-		user: emptyUser,
-		comments: [],
-	};
+	let Dish = DataDishes.dishes[0];
 	const dishCategories = [
 		'pizza',
 		'burger',

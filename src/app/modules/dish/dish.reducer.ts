@@ -10,13 +10,13 @@ import * as DishAction from './dish.action';
 
 // models
 import { IUser } from '../user/models/IUser';
-import { IDish } from './models/IDish';
+import { IDishWithUserAndComments } from './models/IDish';
 
 export interface DishState {
 	listFilter: string;
-	dishes: IDish[];
-	filteredDishes: IDish[];
-	selectedDish: IDish;
+	dishes: IDishWithUserAndComments[];
+	filteredDishes: IDishWithUserAndComments[];
+	selectedDish: IDishWithUserAndComments;
 	error: string;
 }
 export interface State extends AppState.State {
@@ -24,13 +24,15 @@ export interface State extends AppState.State {
 }
 
 const emptyUser: IUser = {
+	_id: '',
 	first_name: '',
 	last_name: '',
 	email: '',
 	password: '',
 };
 
-const emptyDish: IDish = {
+const emptyDish: IDishWithUserAndComments = {
+	_id: '',
 	name: '',
 	imageUrl: '',
 	category: '',
@@ -123,10 +125,12 @@ export const dishReducer = createReducer<DishState>(
 		};
 	}),
 	on(DishAction.updateDishSuccess, (state, action): DishState => {
-		const updatedDishes: IDish[] = state.dishes.map(dish => {
-			if (dish._id === action.dish._id) return action.dish;
-			else return dish;
-		});
+		const updatedDishes: IDishWithUserAndComments[] = state.dishes.map(
+			dish => {
+				if (dish._id === action.dish._id) return action.dish;
+				else return dish;
+			}
+		);
 		return {
 			...state,
 			dishes: updatedDishes,

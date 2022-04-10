@@ -3,14 +3,19 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, shareReplay } from 'rxjs/operators';
 import { IComment } from './models/IComment';
-import { IDish } from './models/IDish';
+import {
+	IDish,
+	IDishWithUser,
+	IDishWithoutUserAndComments,
+	IDishWithUserAndComments,
+} from './models/IDish';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class DishService {
-	private dishUrl = 'https://angular-restaurant-app.herokuapp.com/dish';
-	// private dishUrl = 'http://localhost:5000/dish';
+	// private dishUrl = 'https://angular-restaurant-app.herokuapp.com/dish';
+	private dishUrl = 'http://localhost:5000/dish';
 	categories$ = this.http
 		.get<string[]>(`${this.dishUrl}/categories`)
 		.pipe(shareReplay(1), catchError(this.handleError));
@@ -19,19 +24,27 @@ export class DishService {
 		.pipe(shareReplay(1), catchError(this.handleError));
 
 	dishes$ = this.http
-		.get<{ dishes: IDish[]; error: string }>(this.dishUrl)
+		.get<{ dishes: IDishWithUserAndComments[]; error: string }>(
+			this.dishUrl
+		)
 		.pipe(shareReplay(1), catchError(this.handleError));
+
 	constructor(private http: HttpClient) {}
 
-	getDish(id: string): Observable<IDish> {
+	getDish(id: string): Observable<IDishWithUserAndComments> {
 		return this.http
-			.get<IDish>(`${this.dishUrl}/${id}`)
+			.get<IDishWithUserAndComments>(`${this.dishUrl}/${id}`)
 			.pipe(catchError(this.handleError));
 	}
 
-	postDish(dish: IDish): Observable<{ dish: IDish; error: string }> {
+	postDish(
+		dish: Partial<IDishWithUser>
+	): Observable<{ dish: IDishWithUserAndComments; error: string }> {
 		return this.http
-			.post<{ dish: IDish; error: string }>(this.dishUrl, dish)
+			.post<{ dish: IDishWithUserAndComments; error: string }>(
+				this.dishUrl,
+				dish
+			)
 			.pipe(catchError(this.handleError));
 	}
 
@@ -42,10 +55,13 @@ export class DishService {
 	}
 	putDish(
 		id: string,
-		dish: IDish
-	): Observable<{ dish: IDish; error: string }> {
+		dish: Partial<IDishWithoutUserAndComments>
+	): Observable<{ dish: IDishWithUserAndComments; error: string }> {
 		return this.http
-			.put<{ dish: IDish; error: string }>(`${this.dishUrl}/${id}`, dish)
+			.put<{ dish: IDishWithUserAndComments; error: string }>(
+				`${this.dishUrl}/${id}`,
+				dish
+			)
 			.pipe(catchError(this.handleError));
 	}
 

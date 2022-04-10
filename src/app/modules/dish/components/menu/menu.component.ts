@@ -9,18 +9,18 @@ import { map } from 'rxjs/operators';
 import * as DishActions from '../../dish.action';
 import * as DishReducer from '../../dish.reducer';
 // models
-import { IDish } from '../../models/IDish';
+import { IDishWithUserAndComments } from '../../models/IDish';
 
 @Component({
 	templateUrl: './menu.component.html',
 	styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-	dishes$!: Observable<IDish[]>;
+	dishes$!: Observable<IDishWithUserAndComments[]>;
 	displayedColumns: string[] = ['name', 'category', 'price', 'description'];
 	private listFilterSubject = new BehaviorSubject<string>('');
 	listFilterAction$ = this.listFilterSubject.asObservable();
-	filteredDishes$: Observable<IDish[]> = of([]);
+	filteredDishes$: Observable<IDishWithUserAndComments[]> = of([]);
 
 	get darkTheme(): boolean {
 		return localStorage.getItem('theme') === 'dark';
@@ -48,7 +48,7 @@ export class MenuComponent implements OnInit {
 	onFilterChange(x: any) {
 		this.listFilterSubject.next(x.target.value);
 	}
-	onDishClicked(dish: IDish): void {
+	onDishClicked(dish: IDishWithUserAndComments): void {
 		if (dish._id) {
 			this.store.dispatch(DishActions.selectDish({ dish }));
 			this.router.navigate(['/menu', dish._id]);

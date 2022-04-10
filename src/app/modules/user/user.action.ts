@@ -20,3 +20,17 @@ export const loginUserError = createAction(
 
 // Logout user
 export const logoutUser = createAction('[User] logout');
+
+// Update user
+export const updateUser = createAction(
+	'[User] update',
+	props<{ userId: string; user: Partial<IUser> }>()
+);
+export const updateUserSuccess = createAction(
+	'[User] update success',
+	props<{ user: IUser }>()
+);
+export const updateUserError = createAction(
+	'[User] update error',
+	props<{ error: string }>()
+);

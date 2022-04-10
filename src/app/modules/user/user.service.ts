@@ -13,8 +13,8 @@ import { IUser } from './models/IUser';
 	providedIn: 'root',
 })
 export class UserService {
-	private userUrl = 'https://angular-restaurant-app.herokuapp.com/user';
-	// private userUrl = 'http://localhost:5000/user';
+	// private userUrl = 'https://angular-restaurant-app.herokuapp.com/user';
+	private userUrl = 'http://localhost:5000/user';
 
 	constructor(private http: HttpClient) {}
 
@@ -30,7 +30,9 @@ export class UserService {
 			.pipe(catchError(this.handleError));
 	}
 
-	registerUser(user: IUser): Observable<{ user: IUser; error: string }> {
+	registerUser(
+		user: Partial<IUser>
+	): Observable<{ user: IUser; error: string }> {
 		return this.http
 			.post<{ user: IUser; error: string }>(
 				`${this.userUrl}/register`,
@@ -51,9 +53,14 @@ export class UserService {
 			.pipe(catchError(this.handleError));
 	}
 
-	updateUser(user: IUser): Observable<IUser> {
+	updateUser(
+		user: Partial<IUser>,
+		userId: string
+	): Observable<{ user: IUser; error: string }> {
 		return this.http
-			.put<IUser>(`${this.userUrl}/${user._id}`, { user })
+			.put<{ user: IUser; error: string }>(`${this.userUrl}/${userId}`, {
+				user,
+			})
 			.pipe(catchError(this.handleError));
 	}
 

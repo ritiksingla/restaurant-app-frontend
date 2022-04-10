@@ -47,11 +47,46 @@ export class UserEffect {
 							});
 						}
 					}),
-					tap(() => {
-						this.store.dispatch(loadDishes());
-						this.router.navigateByUrl('menu');
+					tap(res => {
+						if (res.type === '[User] login success') {
+							this.store.dispatch(loadDishes());
+							this.router.navigateByUrl('menu');
+						}
 					}),
 					catchError(error => of(AppAction.loginUserError({ error })))
+				)
+			)
+		)
+	);
+
+	updateUser$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(AppAction.updateUser),
+			concatMap(action =>
+				this.userService.updateUser(action.user, action.userId).pipe(
+					map(res => {
+						if (res.error.length > 0) {
+							return AppAction.updateUserError({
+								error: res.error,
+							});
+						} else {
+							localStorage.setItem(
+								'user',
+								JSON.stringify(res.user)
+							);
+							return AppAction.updateUserSuccess({
+								user: res.user,
+							});
+						}
+					}),
+					tap(res => {
+						if (res.type === '[User] update success') {
+							this.router.navigateByUrl('profile/detail');
+						}
+					}),
+					catchError(error =>
+						of(AppAction.updateUserError({ error }))
+					)
 				)
 			)
 		)

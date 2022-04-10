@@ -1,5 +1,7 @@
 // angular
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 // angular redux
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -7,7 +9,7 @@ import * as DishAction from './dish.action';
 
 // rxjs
 import { of } from 'rxjs';
-import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
 // services
 import { DishService } from './dish.service';
@@ -33,14 +35,20 @@ import { DishService } from './dish.service';
 */
 @Injectable()
 export class DishEffect {
-	constructor(private actions$: Actions, private dishService: DishService) {}
+	constructor(
+		private actions$: Actions,
+		private dishService: DishService,
+		private location: Location,
+		private router: Router
+	) {}
 
 	loadDishes$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(DishAction.loadDishes),
-			mergeMap(() =>
+			concatMap(() =>
 				this.dishService.dishes$.pipe(
 					map(res => {
+						alert('loadDishes');
 						if (res.error.length > 0) {
 							return DishAction.loadDishesError({
 								error: res.error,
@@ -71,6 +79,11 @@ export class DishEffect {
 						}
 						return DishAction.updateDishSuccess({ dish: res.dish });
 					}),
+					tap(res => {
+						if (res.type === '[Dish] update success') {
+							this.location.back();
+						}
+					}),
 					catchError(error =>
 						of(DishAction.updateDishError({ error }))
 					)
@@ -85,13 +98,17 @@ export class DishEffect {
 			concatMap(action =>
 				this.dishService.postDish(action.newDish).pipe(
 					map(res => {
-						console.log(JSON.stringify(res.error));
 						if (res.error.length > 0) {
 							return DishAction.addDishError({
 								error: res.error,
 							});
 						}
 						return DishAction.addDishSuccess({ dish: res.dish });
+					}),
+					tap(res => {
+						if (res.type === '[Dish] add success') {
+							this.router.navigate(['menu']);
+						}
 					}),
 					catchError(error => of(DishAction.addDishError({ error })))
 				)
@@ -111,6 +128,11 @@ export class DishEffect {
 							});
 						}
 						return DishAction.deleteDishSuccess({ dish: res.dish });
+					}),
+					tap(res => {
+						if (res.type === '[Dish] delete success') {
+							this.router.navigate(['menu']);
+						}
 					}),
 					catchError(error =>
 						of(DishAction.deleteDishError({ error }))

@@ -1,20 +1,19 @@
 <mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
 	<mat-card-title>User Settings</mat-card-title>
 	<mat-card-content>
-		<form #updatedUser="ngForm" (ngSubmit)="onSubmit(updatedUser)">
+		<form (ngSubmit)="updateUser()" [formGroup]="userForm">
 			<mat-form-field style="width: 100%" appearance="fill">
 				<mat-label>First Name</mat-label>
 				<input
 					matInput
-					maxlength="20"
 					type="text"
 					id="first_name"
-					name="first_name"
-					[(ngModel)]="currentUser.first_name"
-					required
-					#firstNameField="ngModel" />
+					formControlName="first_name" />
 				<mat-error
-					*ngIf="firstNameField.invalid && firstNameField.touched">
+					*ngIf="
+						userForm.get('first_name')?.invalid &&
+						userForm.get('first_name')?.touched
+					">
 					FirstName should be between 1-20 characters long
 				</mat-error>
 			</mat-form-field>
@@ -22,15 +21,14 @@
 				<mat-label>Last Name</mat-label>
 				<input
 					matInput
-					maxlength="20"
 					type="text"
 					id="last_name"
-					name="last_name"
-					[(ngModel)]="currentUser.last_name"
-					required
-					#lastNameField="ngModel" />
+					formControlName="last_name" />
 				<mat-error
-					*ngIf="lastNameField.invalid && lastNameField.touched">
+					*ngIf="
+						userForm.get('last_name')?.invalid &&
+						userForm.get('last_name')?.touched
+					">
 					LastName should be between 1-20 characters long
 				</mat-error>
 			</mat-form-field>
@@ -39,14 +37,14 @@
 				<mat-label>Email</mat-label>
 				<input
 					matInput
-					maxlength="20"
 					type="email"
 					id="email"
-					name="email"
-					[(ngModel)]="currentUser.email"
-					required
-					#emailField="ngModel" />
-				<mat-error *ngIf="emailField.invalid && emailField.touched">
+					formControlName="email" />
+				<mat-error
+					*ngIf="
+						userForm.get('email')?.invalid &&
+						userForm.get('email')?.touched
+					">
 					Please enter email
 				</mat-error>
 			</mat-form-field>

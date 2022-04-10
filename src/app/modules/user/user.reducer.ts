@@ -34,6 +34,7 @@ export const getErrorState = createSelector(
 );
 
 const emptyUser: IUser = {
+	_id: '',
 	first_name: '',
 	last_name: '',
 	email: '',
@@ -70,6 +71,19 @@ export const userReducer = createReducer<UserState>(
 			current_user: emptyUser,
 			jwt_token: '',
 			authenticated: false,
+		};
+	}),
+	on(UserActions.updateUserSuccess, (state, action): UserState => {
+		return {
+			...state,
+			current_user: action.user,
+			error: '',
+		};
+	}),
+	on(UserActions.updateUserError, (state, action): UserState => {
+		return {
+			...state,
+			error: action.error,
 		};
 	})
 );

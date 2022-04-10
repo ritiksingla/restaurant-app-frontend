@@ -94,36 +94,33 @@
 		<mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
 			<mat-card-title>Make Comment </mat-card-title>
 			<mat-card-content>
-				<mat-form-field style="width: 100%" appearance="fill">
-					<mat-label>Content</mat-label>
-					<textarea
-						matInput
-						id="comment_content"
-						name="comment_content"
-						[(ngModel)]="comment_content"
-						required></textarea>
-				</mat-form-field>
-				<mat-form-field style="width: 100%" appearance="fill">
-					<mat-label>Rating</mat-label>
-					<mat-select
-						matNativeControl
-						required
-						id="comment_rating"
-						name="comment_rating"
-						[(ngModel)]="comment_rating">
-						<mat-option value="1">1</mat-option>
-						<mat-option value="2">2</mat-option>
-						<mat-option value="3">3</mat-option>
-						<mat-option value="4">4</mat-option>
-						<mat-option value="5">5</mat-option>
-					</mat-select>
-				</mat-form-field>
-				<button
-					mat-raised-button
-					(click)="addComment(dish)"
-					color="primary">
-					POST
-				</button>
+				<form (ngSubmit)="addComment(dish)" [formGroup]="commentForm">
+					<mat-form-field style="width: 100%" appearance="fill">
+						<mat-label>Content</mat-label>
+						<textarea
+							matInput
+							id="content"
+							formControlName="content"></textarea>
+					</mat-form-field>
+
+					<mat-form-field style="width: 100%" appearance="fill">
+						<mat-label>Rating</mat-label>
+						<mat-select
+							matNativeControl
+							id="rating"
+							formControlName="rating">
+							<mat-option value="1">1</mat-option>
+							<mat-option value="2">2</mat-option>
+							<mat-option value="3">3</mat-option>
+							<mat-option value="4">4</mat-option>
+							<mat-option value="5">5</mat-option>
+						</mat-select>
+					</mat-form-field>
+
+					<button mat-raised-button color="primary" type="submit">
+						POST
+					</button>
+				</form>
 			</mat-card-content>
 		</mat-card>
 	</div>

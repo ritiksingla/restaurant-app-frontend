@@ -1,8 +1,8 @@
 import { IUser } from '../../user/models/IUser';
-import { IComment } from './IComment';
+import { IComment, ICommentWithAuthor } from './IComment';
 
 export interface IDish {
-	_id?: string;
+	_id: string;
 	name: string;
 	imageUrl: string;
 	category: string;
@@ -10,6 +10,16 @@ export interface IDish {
 	price: number;
 	description: string;
 	averageRating: number;
-	user: IUser;
-	comments: IComment[];
+	user: IUser | string;
+	comments: IComment[] | string[];
 }
+
+export type IDishWithoutUserAndComments = Omit<IDish, 'comments' | 'user'>;
+export type IDishWithComments = IDishWithoutUserAndComments & {
+	comments: IComment[];
+};
+export type IDishWithUser = IDishWithoutUserAndComments & { user: IUser };
+export type IDishWithUserAndComments = IDishWithUser & { comments: IComment[] };
+export type IDishWithUserAndCommentsAndAuthor = IDishWithUser & {
+	comments: ICommentWithAuthor[];
+};
