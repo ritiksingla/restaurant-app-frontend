@@ -1,11 +1,9 @@
 // angular
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 // rxjs
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
 // models
 import { IUser } from './models/IUser';
 
@@ -13,8 +11,8 @@ import { IUser } from './models/IUser';
 	providedIn: 'root',
 })
 export class UserService {
-	// private userUrl = 'https://angular-restaurant-app.herokuapp.com/user';
-	private userUrl = 'http://localhost:5000/user';
+	private userUrl = 'https://angular-restaurant-app.herokuapp.com/user';
+	// private userUrl = 'http://localhost:5000/user';
 
 	constructor(private http: HttpClient) {}
 

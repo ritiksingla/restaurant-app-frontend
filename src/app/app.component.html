@@ -1,57 +1,64 @@
-<nav
-	[ngClass]="{
-		'navbar navbar-expand mb-3': true,
-		'navbar-light bg-light': darkTheme === false,
-		'navbar-dark bg-dark': darkTheme
-	}">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<a class="navbar-brand" routerLink="/welcome">{{ pageTitle }}</a>
-		</div>
-		<ul
-			class="list-unstyled d-flex justify-content-between align-items-baseline gap-5">
-			<li>
-				<button
-					mat-icon-button
-					color="primary"
-					[routerLink]="auth ? ['/menu'] : ['/user/login']"
-					routerLinkActive="active"
-					[routerLinkActiveOptions]="{ exact: true }">
-					<mat-icon *ngIf="auth">menu</mat-icon>
-					<mat-icon *ngIf="!auth">login</mat-icon>
-				</button>
-			</li>
-			<li>
-				<button
-					mat-icon-button
-					color="primary"
-					[routerLink]="auth ? ['/menu/add'] : ['/user/register']"
-					routerLinkActive="active">
-					<mat-icon *ngIf="auth">add_circle</mat-icon>
-					<mat-icon *ngIf="!auth">app_registration</mat-icon>
-				</button>
-			</li>
-			<li *ngIf="auth">
-				<button
-					mat-icon-button
-					color="primary"
+<!-- Toolbar -->
+<mat-toolbar [color]="darkTheme ? 'primary' : 'accent'" class="mat-header">
+	<mat-toolbar-row>
+		<span class="nav-tool-items">
+			<mat-icon (click)="sidenav.toggle()" class="mat-hamburger"
+				>menu</mat-icon
+			>
+		</span>
+		<a
+			mat-button
+			[color]="darkTheme ? 'accent' : 'primary'"
+			routerLink="welcome"
+			>{{ pageTitle }}</a
+		>
+	</mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container>
+	<!-- Sidenav -->
+	<mat-sidenav #sidenav [mode]="isScreenSmall ? 'side' : 'over'">
+		<mat-nav-list>
+			<a
+				mat-list-item
+				[routerLink]="auth ? ['/menu'] : ['/user/login']"
+				routerLinkActive="active"
+				[routerLinkActiveOptions]="{ exact: true }">
+				<span *ngIf="auth">Menu</span>
+				<span *ngIf="!auth">Login</span>
+			</a>
+			<a
+				mat-list-item
+				[routerLink]="auth ? ['/menu/add'] : ['/user/register']"
+				routerLinkActive="active">
+				<span *ngIf="auth">Add Dish</span>
+				<span *ngIf="!auth">Register</span>
+			</a>
+
+			<div *ngIf="auth">
+				<a
+					mat-list-item
 					routerLink="/profile"
-					routerLinkActive="active"
-					aria-label="Example icon button with a home icon">
-					<mat-icon>settings</mat-icon>
-				</button>
-			</li>
-			<li class="nav-item">
-				<mat-slide-toggle
-					color="primary"
-					class="text-primary"
-					(change)="onThemeChange($event.checked)"
-					>Dark Theme</mat-slide-toggle
-				>
-			</li>
-		</ul>
-	</div>
-</nav>
-<div class="container">
-	<router-outlet></router-outlet>
-</div>
+					routerLinkActive="active">
+					<span>Settings</span>
+				</a>
+			</div>
+			<mat-slide-toggle (change)="onThemeChange($event.checked)">
+			</mat-slide-toggle>
+		</mat-nav-list>
+	</mat-sidenav>
+
+	<!-- Main content -->
+	<mat-sidenav-content>
+		<div class="mt-3">
+			<router-outlet></router-outlet>
+		</div>
+	</mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <mat-toolbar [color]="darkTheme ? 'primary' : 'accent'" class="mat-footer">
+	<mat-toolbar-row class="mat-caption-container">
+		<p class="mat-caption">
+			Made with <mat-icon>favorite</mat-icon> by Ritik Singla
+		</p>
+	</mat-toolbar-row>
+</mat-toolbar> -->

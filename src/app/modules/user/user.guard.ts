@@ -7,7 +7,6 @@ import {
 	RouterStateSnapshot,
 	UrlTree,
 } from '@angular/router';
-
 // rxjs
 import { Observable } from 'rxjs';
 

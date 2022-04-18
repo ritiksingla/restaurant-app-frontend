@@ -1,0 +1,56 @@
+version: 2.1
+
+workflows:
+  deploy:
+    jobs:
+      - deploy
+orbs:
+  browser-tools: circleci/browser-tools@1.2.3
+
+jobs:
+  deploy:
+    docker:
+      - image: cimg/node:16.14.2-browsers
+    working_directory: ~/restaurant
+    steps:
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          name: Check drivers to run tests
+          command: |
+            google-chrome --version
+            chromedriver --version
+      - checkout
+      
+      - run:
+          name: Check node version
+          command: node --version
+      - restore_cache:
+          key: restaurant-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: restaurant-{{ .Branch }}-{{ checksum "package-lock.json" }}
+      - run:
+          name: Check linting
+          command: npm run lint:prod
+      - run:
+          name: Build in circleci docker
+          command: npm run build:prod
+      - run:
+          name: Check tests
+          command: npm run test:prod
+      - setup_remote_docker:
+          version: 20.10.11
+      - run:
+          name: Build docker image
+          command: docker build -t ritiksingla.azurecr.io/restaurant-frontend:1.0 .
+      - run:
+          name: Login to azure
+          command: docker login --username $DOCKER_USER --password $DOCKER_PASSWORD ritiksingla.azurecr.io
+      - run:
+          name: Push image to azure container registry
+          command: docker push ritiksingla.azurecr.io/restaurant-frontend:1.0

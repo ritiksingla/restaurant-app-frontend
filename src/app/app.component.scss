@@ -1,0 +1,40 @@
+.mat-header mat-toolbar-row {
+	display: flex;
+	gap: 1.2em;
+}
+
+.mat-nav-list .mat-list-item {
+	font-size: 15px;
+}
+
+.mat-sidenav,
+.mat-sidenav-content {
+	padding: 15px;
+}
+
+.mat-sidenav-content {
+	padding: 25px 40px 0;
+}
+
+.mat-sidenav {
+	width: 250px;
+}
+
+.mat-header {
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.mat-hamburger {
+	cursor: pointer;
+}
+
+.mat-caption-container {
+	display: flex;
+	justify-content: center;
+}
+
+.mat-caption {
+	text-align: center;
+}

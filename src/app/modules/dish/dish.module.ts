@@ -1,23 +1,16 @@
 // angular
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { EffectsModule } from '@ngrx/effects';
 // ngrx
 import { StoreModule } from '@ngrx/store';
-import { DishEffect } from './dish.effect';
-import { dishReducer } from './dish.reducer';
-import { EffectsModule } from '@ngrx/effects';
-
+import { MaterialModule } from '../shared/material.module';
 // pipes
 import { Capitalize } from '../shared/pipes/capitalize.pipe';
-
 // shared modules
 import { SharedModule } from '../shared/shared.module';
-import { MaterialModule } from '../shared/material.module';
-import { DishRoutingModule } from './dish-routing.module';
-
 // components
 import { AddDishComponent } from './components/add-dish/add-dish.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
@@ -25,6 +18,9 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ProfileDetailComponent } from './components/profile-detail/profile-detail.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DishRoutingModule } from './dish-routing.module';
+import { DishEffect } from './dish.effect';
+import { dishReducer } from './dish.reducer';
 
 @NgModule({
 	declarations: [

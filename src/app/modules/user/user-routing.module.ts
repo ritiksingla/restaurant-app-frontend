@@ -1,13 +1,11 @@
 // angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-// guards
-import { UserGuard } from './user.guard';
-
 // components
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+// guards
+import { UserGuard } from './user.guard';
 
 const userRoutes: Routes = [
 	{

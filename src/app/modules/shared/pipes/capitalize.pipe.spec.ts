@@ -1,7 +1,8 @@
 import { Capitalize } from './capitalize.pipe';
+
 describe('Capitalize Pipe', () => {
 	it('should transform each word of text to uppercase', () => {
-		let pipe = new Capitalize();
+		const pipe = new Capitalize();
 		expect(pipe.transform('this IS soME teXT')).toEqual(
 			'This Is Some Text'
 		);

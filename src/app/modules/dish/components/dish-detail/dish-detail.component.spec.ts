@@ -1,31 +1,21 @@
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { DebugElement } from '@angular/core';
 import { Location } from '@angular/common';
-import {
-	ComponentFixture,
-	fakeAsync,
-	flush,
-	TestBed,
-	async,
-} from '@angular/core/testing';
-import { MatSelectHarness } from '@angular/material/select/testing';
-import { MatCardHarness } from '@angular/material/card/testing';
-import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { MaterialModule } from '../../../shared/material.module';
-import { SharedModule } from '../../../shared/shared.module';
-import { DishService } from '../../dish.service';
-import { UserService } from '../../../user/user.service';
-import { DishDetailComponent } from './dish-detail.component';
-import { IDish } from '../../models/IDish';
-import { IUser } from '../../../user/models/IUser';
-
 import DataDishes from '../../../shared/data/DataDishes.json';
 import DataUsers from '../../../shared/data/DataUsers.json';
+import { MaterialModule } from '../../../shared/material.module';
+import { SharedModule } from '../../../shared/shared.module';
+import { IUser } from '../../../user/models/IUser';
+import { UserService } from '../../../user/user.service';
+import { DishService } from '../../dish.service';
+import { IDishWithUserAndComments } from '../../models/IDish';
+import { DishDetailComponent } from './dish-detail.component';
 
 class ParamMap {
 	public static keys: Record<string, string>[] = [];
@@ -38,7 +28,7 @@ class ParamMap {
 		return this._index(key) !== -1;
 	}
 	public static get(key: string): string {
-		let idx = this._index(key);
+		const idx = this._index(key);
 		return this.keys[idx][key];
 	}
 }
@@ -48,14 +38,14 @@ describe('Dish Detail Component', () => {
 	let mockDishService, mockUserService;
 	let fixture: ComponentFixture<DishDetailComponent>;
 	let loader: HarnessLoader;
-	let dish: IDish = DataDishes.dishes[0];
-	let users: IUser[] = DataUsers.users;
-	let mockActivatedRoute = {
+	const dish: IDishWithUserAndComments = DataDishes.dishes[0];
+	const users: IUser[] = DataUsers.users;
+	const mockActivatedRoute = {
 		snapshot: {
-			queryParamMap: ParamMap,
+			paramMap: ParamMap,
 		},
 	};
-	let paramMap: typeof ParamMap = mockActivatedRoute.snapshot.queryParamMap;
+	const paramMap: typeof ParamMap = mockActivatedRoute.snapshot.paramMap;
 
 	beforeEach(async () => {
 		mockLocation = jasmine.createSpyObj(['back']);
@@ -68,6 +58,13 @@ describe('Dish Detail Component', () => {
 		mockStore = jasmine.createSpyObj(['dispatch']);
 		mockUserService = jasmine.createSpyObj(['getUsers']);
 
+		mockDishService.getDish.and.returnValue(of(dish));
+		mockUserService.getUsers.and.returnValue(of(users));
+
+		const value = dish._id;
+		const e: Record<string, string> = { id: value };
+		paramMap.keys.push(e);
+
 		await TestBed.configureTestingModule({
 			imports: [SharedModule, BrowserAnimationsModule, MaterialModule],
 			declarations: [DishDetailComponent],
@@ -78,25 +75,16 @@ describe('Dish Detail Component', () => {
 				{ provide: DishService, useValue: mockDishService },
 				{ provide: ActivatedRoute, useValue: mockActivatedRoute },
 				{ provide: UserService, useValue: mockUserService },
+				FormBuilder,
 			],
 		}).compileComponents();
 		fixture = TestBed.createComponent(DishDetailComponent);
 		loader = TestbedHarnessEnvironment.loader(fixture);
-
-		mockDishService.getDish.and.returnValue(of(dish));
-		mockUserService.getUsers.and.returnValue(of(users));
-		let id = dish._id;
-		if (id !== undefined) {
-			let e: Record<string, string> = { id: id };
-			paramMap.keys.push(e);
-			fixture.detectChanges();
-		}
 		fixture.componentInstance.currentUser = dish.user;
 		fixture.detectChanges();
 	});
 
-	it('should render dish detail card correctly', async () => {
-		fixture.detectChanges();
+	it('should render dish detail card correctly', () => {
 		// const cards = await loader.getAllHarnesses(MatCardHarness);
 		// expect(cards.length).toBe(1);
 		expect(true).toBe(true);

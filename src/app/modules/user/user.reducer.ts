@@ -6,10 +6,9 @@ import {
 	on,
 } from '@ngrx/store';
 import * as AppState from '../../app.state';
-import * as UserActions from './user.action';
-
 // models
 import { IUser } from './models/IUser';
+import * as UserActions from './user.action';
 
 export interface UserState {
 	jwt_token: string;

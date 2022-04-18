@@ -1,27 +1,41 @@
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { MaterialModule } from '../../../shared/material.module';
+import { SharedModule } from '../../../shared/shared.module';
+import { UserService } from '../../user.service';
 import { RegisterComponent } from './register.component';
-import { IUser } from '../../models/IUser';
-
-import { of } from 'rxjs';
 
 describe('register component', () => {
-	let component: RegisterComponent;
+	let fixture: ComponentFixture<RegisterComponent>;
+	let loader: HarnessLoader;
 	let mockUserService;
-	// let mockNgForm;
 	let mockRouter;
-	// let user:IUser;
-	beforeEach(() => {
+	beforeEach(async () => {
 		mockUserService = jasmine.createSpyObj('UserService', ['registerUser']);
 		mockRouter = jasmine.createSpyObj('Router', ['navigate']);
-		// mockNgForm = jasmine.createSpyObj({
-		// 	propertyName: 'valid'
-		// });
-		// mockNgForm.valid.and.returnValue(true);
-		// component.user = user;
-		mockUserService.registerUser.and.returnValue(of({ user: '' }));
-		component = new RegisterComponent(mockRouter, mockUserService);
+
+		await TestBed.configureTestingModule({
+			imports: [
+				SharedModule,
+				BrowserAnimationsModule,
+				MaterialModule,
+				ReactiveFormsModule,
+			],
+			declarations: [RegisterComponent],
+			providers: [
+				{ provide: Router, useValue: mockRouter },
+				{ provide: UserService, useValue: mockUserService },
+				FormBuilder,
+			],
+		}).compileComponents();
+		fixture = TestBed.createComponent(RegisterComponent);
+		loader = TestbedHarnessEnvironment.loader(fixture);
 	});
-	it('should call register method', () => {
-		// expect(component.onSubmit).toHaveBeenCalled();
-		expect('user').toBe('user');
+	it('should mount register component', () => {
+		expect(true).toBe(true);
 	});
 });

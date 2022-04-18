@@ -24,7 +24,7 @@ export class ProfileEditComponent implements OnInit {
 		private store: Store<State>,
 		private fb: FormBuilder
 	) {
-		let user = localStorage.getItem('user');
+		const user = localStorage.getItem('user');
 		if (user) {
 			this.currentUser = JSON.parse(user);
 		}

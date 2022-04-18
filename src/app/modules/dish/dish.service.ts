@@ -5,8 +5,8 @@ import { catchError, shareReplay } from 'rxjs/operators';
 import { IComment } from './models/IComment';
 import {
 	IDish,
-	IDishWithUser,
 	IDishWithoutUserAndComments,
+	IDishWithUser,
 	IDishWithUserAndComments,
 } from './models/IDish';
 
@@ -14,8 +14,8 @@ import {
 	providedIn: 'root',
 })
 export class DishService {
-	// private dishUrl = 'https://angular-restaurant-app.herokuapp.com/dish';
-	private dishUrl = 'http://localhost:5000/dish';
+	private dishUrl = 'https://angular-restaurant-app.herokuapp.com/dish';
+	// private dishUrl = 'http://localhost:5000/dish';
 	categories$ = this.http
 		.get<string[]>(`${this.dishUrl}/categories`)
 		.pipe(shareReplay(1), catchError(this.handleError));
@@ -68,7 +68,7 @@ export class DishService {
 	postComment(
 		dishId: string,
 		userId: string,
-		content: String,
+		content: string,
 		rating: number
 	): Observable<{ comment: IComment; error: string }> {
 		return this.http

@@ -1,8 +1,11 @@
-<mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
+<mat-card>
 	<mat-card-title>User Settings</mat-card-title>
 	<mat-card-content>
 		<form (ngSubmit)="updateUser()" [formGroup]="userForm">
-			<mat-form-field style="width: 100%" appearance="fill">
+			<mat-form-field
+				[color]="darkTheme ? 'primary' : 'accent'"
+				style="width: 100%"
+				appearance="fill">
 				<mat-label>First Name</mat-label>
 				<input
 					matInput
@@ -17,7 +20,10 @@
 					FirstName should be between 1-20 characters long
 				</mat-error>
 			</mat-form-field>
-			<mat-form-field style="width: 100%" appearance="fill">
+			<mat-form-field
+				[color]="darkTheme ? 'primary' : 'accent'"
+				style="width: 100%"
+				appearance="fill">
 				<mat-label>Last Name</mat-label>
 				<input
 					matInput
@@ -33,7 +39,10 @@
 				</mat-error>
 			</mat-form-field>
 
-			<mat-form-field style="width: 100%" appearance="fill">
+			<mat-form-field
+				[color]="darkTheme ? 'primary' : 'accent'"
+				style="width: 100%"
+				appearance="fill">
 				<mat-label>Email</mat-label>
 				<input
 					matInput
@@ -48,7 +57,10 @@
 					Please enter email
 				</mat-error>
 			</mat-form-field>
-			<button mat-raised-button color="primary" type="submit">
+			<button
+				mat-raised-button
+				[color]="darkTheme ? 'primary' : 'accent'"
+				type="submit">
 				Update
 			</button>
 		</form>

@@ -1,4 +1,4 @@
-<mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
+<mat-card>
 	<mat-card-title>New Dish</mat-card-title>
 	<mat-card-content>
 		<form novalidate (ngSubmit)="addOrUpdateDish()" [formGroup]="dishForm">
@@ -109,7 +109,10 @@
 				</mat-error>
 			</mat-form-field>
 
-			<button mat-raised-button color="primary" type="submit">
+			<button
+				mat-raised-button
+				[color]="darkTheme ? 'primary' : 'accent'"
+				type="submit">
 				{{ btnTitle }}
 			</button>
 		</form>

@@ -1,6 +1,5 @@
 // angular redux
 import { createAction, props } from '@ngrx/store';
-
 // models
 import { IUser } from './models/IUser';
 

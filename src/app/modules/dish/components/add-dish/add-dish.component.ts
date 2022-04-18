@@ -1,25 +1,15 @@
 // angular
 import { Component, OnInit } from '@angular/core';
-import {
-	FormGroup,
-	FormBuilder,
-	FormControl,
-	Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 // angular redux
 import { Store } from '@ngrx/store';
-import * as DishActions from '../../dish.action';
-import { State } from '../../dish.reducer';
-
 // rxjs
 import { Observable } from 'rxjs';
-
 // models
 import { IUser } from '../../../user/models/IUser';
-import { IDishWithUserAndComments } from '../../models/IDish';
-
+import * as DishActions from '../../dish.action';
+import { State } from '../../dish.reducer';
 // services
 import { DishService } from '../../dish.service';
 
@@ -28,9 +18,9 @@ import { DishService } from '../../dish.service';
 })
 export class AddDishComponent implements OnInit {
 	currentUser!: IUser;
-	btnTitle: string = 'Add';
+	btnTitle = 'Add';
 	dishForm!: FormGroup;
-	dishId: string = '';
+	dishId = '';
 	get darkTheme(): boolean {
 		return localStorage.getItem('theme') === 'dark';
 	}
@@ -56,7 +46,7 @@ export class AddDishComponent implements OnInit {
 		private store: Store<State>,
 		private fb: FormBuilder
 	) {
-		let currentUser = localStorage.getItem('user');
+		const currentUser = localStorage.getItem('user');
 		if (currentUser) this.currentUser = JSON.parse(currentUser);
 		this.categories$ = this.service.categories$;
 		this.labels$ = this.service.labels$;
@@ -71,7 +61,7 @@ export class AddDishComponent implements OnInit {
 			label: ['', [Validators.required]],
 			price: [0.0, [Validators.required, Validators.min(0)]],
 		});
-		let P: ParamMap = this.route.snapshot.queryParamMap;
+		const P: ParamMap = this.route.snapshot.queryParamMap;
 		if (P.keys.length > 0) {
 			this.btnTitle = 'Update';
 			// Set form values for updating
@@ -95,7 +85,7 @@ export class AddDishComponent implements OnInit {
 				})
 			);
 		} else {
-			let newDish = { ...this.dishForm.value, user: this.currentUser };
+			const newDish = { ...this.dishForm.value, user: this.currentUser };
 			this.store.dispatch(DishActions.addDish({ newDish }));
 		}
 	}

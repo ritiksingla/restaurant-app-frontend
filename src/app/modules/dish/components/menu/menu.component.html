@@ -1,13 +1,9 @@
-<div class="row mb-2">
-	<div class="col-md-2">Find by name:</div>
-	<div class="col-md-4">
-		<input
-			class="form-control"
-			type="text"
-			(input)="onFilterChange($event)" />
-	</div>
-</div>
-
+<form>
+	<mat-form-field style="width: 40%" appearance="fill">
+		<mat-label>Find By Name</mat-label>
+		<input [formControl]="searchInput" matInput type="text" />
+	</mat-form-field>
+</form>
 <table
 	mat-table
 	[dataSource]="filteredDishes$"

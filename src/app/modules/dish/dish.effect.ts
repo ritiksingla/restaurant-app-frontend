@@ -1,16 +1,13 @@
 // angular
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
-
 // angular redux
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as DishAction from './dish.action';
-
 // rxjs
 import { of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
-
+import * as DishAction from './dish.action';
 // services
 import { DishService } from './dish.service';
 
@@ -48,7 +45,6 @@ export class DishEffect {
 			concatMap(() =>
 				this.dishService.dishes$.pipe(
 					map(res => {
-						alert('loadDishes');
 						if (res.error.length > 0) {
 							return DishAction.loadDishesError({
 								error: res.error,

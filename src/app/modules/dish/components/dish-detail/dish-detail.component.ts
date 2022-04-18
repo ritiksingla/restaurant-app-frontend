@@ -1,35 +1,31 @@
 // angular
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 // angular redux
 import { Store } from '@ngrx/store';
-import * as DishActions from '../../dish.action';
-import * as DishReducer from '../../dish.reducer';
-
 // rxjs
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 // models
 import { IUser } from '../../../user/models/IUser';
+// services
+import { UserService } from '../../../user/user.service';
+import * as DishActions from '../../dish.action';
+import * as DishReducer from '../../dish.reducer';
+import { DishService } from '../../dish.service';
 import { ICommentWithAuthor } from '../../models/IComment';
 import {
 	IDishWithUserAndComments,
 	IDishWithUserAndCommentsAndAuthor,
 } from '../../models/IDish';
 
-// services
-import { UserService } from '../../../user/user.service';
-import { DishService } from '../../dish.service';
-
 @Component({
 	templateUrl: './dish-detail.component.html',
 })
 export class DishDetailComponent implements OnInit {
-	pageTitle: string = 'Dish Detail';
+	pageTitle = 'Dish Detail';
 	dish$!: Observable<IDishWithUserAndComments>;
 	users$!: Observable<IUser[]>;
 
@@ -52,16 +48,15 @@ export class DishDetailComponent implements OnInit {
 		private userService: UserService,
 		private fb: FormBuilder
 	) {
-		let user = localStorage.getItem('user');
+		const user = localStorage.getItem('user');
 		if (user) {
 			this.currentUser = JSON.parse(user);
 		}
 	}
 
 	ngOnInit(): void {
-		const id: string = String(
-			this.activatedRoute.snapshot.paramMap.get('id')
-		);
+		const P: ParamMap = this.activatedRoute.snapshot.paramMap;
+		const id = String(P.get('id'));
 		this.dish$ = this.dishService.getDish(id);
 		this.users$ = this.userService.getUsers();
 		this.dishCommentsWithAuthors$ = combineLatest([
@@ -69,8 +64,8 @@ export class DishDetailComponent implements OnInit {
 			this.users$,
 		]).pipe(
 			map(([dish, users]) => {
-				let comments = dish.comments.map(comment => {
-					let author = users.find(
+				const comments = dish.comments.map(comment => {
+					const author = users.find(
 						u => u._id == String(comment.author)
 					);
 					return {

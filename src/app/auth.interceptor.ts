@@ -7,19 +7,17 @@ import {
 	HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-// shared
-import { SnackBarComponent } from './modules/shared/components/snackbar/snackbar.component';
-
 // rxjs
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+// shared
+import { SnackBarComponent } from './modules/shared/components/snackbar/snackbar.component';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-	token: string = '';
+	token = '';
 	constructor(private snackBar: SnackBarComponent) {
-		let token = localStorage.getItem('jwt');
+		const token = localStorage.getItem('jwt');
 		if (token !== null) {
 			this.token = token;
 		} else {

@@ -1,10 +1,15 @@
 <mat-card *ngIf="currentUser">
 	<mat-card-content>
-		<mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }">
-			<mat-card-title>Your Dishes</mat-card-title>
+		<mat-card>
+			<mat-card-title>
+				<span>Your Dishes</span>
+			</mat-card-title>
 			<mat-card-content>
-				<mat-nav-list>
-					<mat-list-item *ngFor="let dish of userDishes$ | async">
+				<mat-nav-list *ngIf="userDishes$ | async as userDishes">
+					<mat-list-item *ngIf="userDishes.length === 0">
+						No dishes to display
+					</mat-list-item>
+					<mat-list-item *ngFor="let dish of userDishes">
 						<a matLine [routerLink]="['/menu/', dish._id]">{{
 							dish.name
 						}}</a>
@@ -16,12 +21,17 @@
 				</mat-nav-list>
 			</mat-card-content>
 		</mat-card>
-		<mat-card [ngClass]="{ 'bg-dark text-light': darkTheme }" class="mt-3">
-			<mat-card-title>Your Comments</mat-card-title>
+
+		<mat-card class="mt-3">
+			<mat-card-title>
+				<mat-icon>comment</mat-icon>
+			</mat-card-title>
 			<mat-card-content>
-				<mat-nav-list>
-					<mat-list-item
-						*ngFor="let comment of userComments$ | async">
+				<mat-nav-list *ngIf="userComments$ | async as userComments">
+					<mat-list-item *ngIf="userComments.length === 0">
+						No comments to display
+					</mat-list-item>
+					<mat-list-item *ngFor="let comment of userComments">
 						<a matLine> {{ comment.content }}</a>
 						<app-star [rating]="comment.rating"> </app-star>
 					</mat-list-item>

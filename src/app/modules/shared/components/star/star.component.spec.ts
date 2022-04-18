@@ -1,7 +1,7 @@
-import { StarComponent } from './star.component';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { StarComponent } from './star.component';
 
 describe('Star Component', () => {
 	let fixture: ComponentFixture<StarComponent>;
@@ -13,8 +13,8 @@ describe('Star Component', () => {
 		fixture = TestBed.createComponent(StarComponent);
 	});
 	it('should render correct number of stars based on input', () => {
-		let rating = 3.5;
-		let expectedWidth = 75 * (rating / 5);
+		const rating = 3.5;
+		const expectedWidth = 75 * (rating / 5);
 
 		fixture.componentInstance.rating = rating;
 		fixture.componentInstance.ngOnChanges();
@@ -22,7 +22,7 @@ describe('Star Component', () => {
 
 		expect(fixture.componentInstance.starWidth).toEqual(expectedWidth);
 		// expect(fixture.nativeElement.querySelector('.mask').style.width).toEqual(expectedWidth + 'px');
-		let debugMask = fixture.debugElement.query(By.css('.mask'));
+		const debugMask = fixture.debugElement.query(By.css('.mask'));
 		expect(debugMask.nativeElement.style.width).toBe(expectedWidth + 'px');
 	});
 });

@@ -1,67 +1,32 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+	ComponentFixture,
+	fakeAsync,
+	TestBed,
+	tick,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import DataDishes from '../../../shared/data/DataDishes.json';
 import { MaterialModule } from '../../../shared/material.module';
 import { SharedModule } from '../../../shared/shared.module';
 // models
-import { IDish } from '../../models/IDish';
+import { IDishWithUserAndComments } from '../../models/IDish';
 import { MenuComponent } from './menu.component';
 
 describe('Menu Component', () => {
 	let mockRouter, mockStore;
 	let fixture: ComponentFixture<MenuComponent>;
 
-	let DISHES: IDish[];
-	const emptyUser = {
-		first_name: '',
-		last_name: '',
-		email: '',
-		password: '',
-	};
-	let Dish1: IDish = {
-		_id: '1',
-		name: 'dish1',
-		imageUrl: 'https://www.images.com/dish1.png',
-		category: 'pizza',
-		label: 'spicy',
-		price: 3.99,
-		description: 'dish1 pizza spicy',
-		averageRating: 3.69,
-		user: emptyUser,
-		comments: [],
-	};
-	let Dish2: IDish = {
-		_id: '2',
-		name: 'dish2',
-		imageUrl: 'https://www.images.com/dish2.png',
-		category: 'chinese',
-		label: 'hot',
-		price: 5.99,
-		description: 'dish2 pizza spicy',
-		averageRating: 4.69,
-		user: emptyUser,
-		comments: [],
-	};
-	let Dish3: IDish = {
-		_id: '13',
-		name: 'dish13',
-		imageUrl: 'https://www.images.com/dish13.png',
-		category: 'chinese',
-		label: 'hot',
-		price: 5.99,
-		description: 'dish13 pizza spicy',
-		averageRating: 4.69,
-		user: emptyUser,
-		comments: [],
-	};
+	const DISHES: IDishWithUserAndComments[] = DataDishes.dishes;
 
 	beforeEach(() => {
 		mockRouter = jasmine.createSpyObj(['navigate']);
 		mockStore = jasmine.createSpyObj(['select', 'dispatch']);
 		TestBed.configureTestingModule({
-			imports: [SharedModule, MaterialModule],
+			imports: [SharedModule, BrowserAnimationsModule, MaterialModule],
 			declarations: [MenuComponent],
 			providers: [
 				{ provide: Router, useValue: mockRouter },
@@ -69,31 +34,28 @@ describe('Menu Component', () => {
 			],
 		});
 		fixture = TestBed.createComponent(MenuComponent);
-		DISHES = [Dish1, Dish2, Dish3];
 		mockStore.select.and.returnValue(of(DISHES));
-	});
-
-	it('should filter dishes correctly', () => {
-		fixture.detectChanges();
-		const inputElement = fixture.debugElement.query(By.css('input'));
-		inputElement.nativeElement.value = 'dish1';
-		inputElement.triggerEventHandler('input', {
-			target: { value: 'dish1' },
-		});
-		fixture.detectChanges();
-		fixture.componentInstance.filteredDishes$.subscribe(dishes => {
-			expect(dishes.length).toBe(2);
-			for (let dish of dishes) {
-				expect(dish.name).toContain('dish1');
-			}
-		});
 	});
 
 	it('should render correct initial no of dishes in menu', () => {
 		fixture.detectChanges();
 		const rows = fixture.debugElement.queryAll(By.css('.mat-row'));
-		expect(rows.length).toBe(3);
+		expect(rows.length).toBe(DISHES.length);
 	});
+
+	it('should filter dishes correctly', fakeAsync(() => {
+		fixture.detectChanges();
+		const filterInput = 'cake';
+		fixture.componentInstance.searchInput.setValue(filterInput);
+		tick(1000);
+		fixture.detectChanges();
+		fixture.componentInstance.filteredDishes$.subscribe(dishes => {
+			expect(dishes.length).toBe(1);
+			for (const dish of dishes) {
+				expect(dish.name.toLowerCase()).toContain(filterInput);
+			}
+		});
+	}));
 
 	it('should call correct method when clicked on dish', () => {
 		fixture.detectChanges();

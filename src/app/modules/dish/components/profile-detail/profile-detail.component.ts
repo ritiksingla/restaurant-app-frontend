@@ -1,17 +1,14 @@
 // angular
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 // angular redux
 import { Store } from '@ngrx/store';
-import * as DishReducer from '../../dish.reducer';
-
 // rxjs
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 // models
 import { IUser } from '../../../user/models/IUser';
+import * as DishReducer from '../../dish.reducer';
 import { IComment } from '../../models/IComment';
 import { IDishWithUserAndComments } from '../../models/IDish';
 
@@ -32,7 +29,7 @@ export class ProfileDetailComponent implements OnInit {
 		private route: ActivatedRoute,
 		private store: Store<DishReducer.State>
 	) {
-		let user = localStorage.getItem('user');
+		const user = localStorage.getItem('user');
 		if (user) {
 			this.currentUser = JSON.parse(user);
 		}
@@ -54,7 +51,7 @@ export class ProfileDetailComponent implements OnInit {
 				)
 			),
 			map(allComments => {
-				let comments: IComment[] = [];
+				const comments: IComment[] = [];
 				for (let i = 0; i < allComments.length; ++i) {
 					if (allComments[i].length > 0) {
 						comments.push(...allComments[i]);

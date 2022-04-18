@@ -1,4 +1,4 @@
-# Restaurant
+# Restaurant [![CircleCI](https://circleci.com/gh/ritiksingla/restaurant-app-frontend/tree/master.svg?style=shield)](https://circleci.com/gh/ritiksingla/restaurant-app-frontend/tree/master)
 
 ## Install dependencies
 ```sh
@@ -6,15 +6,15 @@ npm install
 ```
 ## Run in dev environment
 ```sh
-npm run start
+npm run start:dev
 ```
 ## Test
 ```sh
-npm run test
+npm run test:dev
 ```
 ## Lint and fix
 ```sh
-npm run lint
+npm run lint:dev
 ```
 
 ## Key learnings to take away

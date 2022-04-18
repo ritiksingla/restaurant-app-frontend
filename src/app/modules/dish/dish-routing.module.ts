@@ -1,7 +1,6 @@
 // angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 // components
 import { AddDishComponent } from './components/add-dish/add-dish.component';
 import { DishDetailComponent } from './components/dish-detail/dish-detail.component';
@@ -9,9 +8,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ProfileDetailComponent } from './components/profile-detail/profile-detail.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { ProfileComponent } from './components/profile/profile.component';
-
 // guards
-import { DishGuard, DishEditGuard } from './dish.guard';
+import { DishEditGuard, DishGuard } from './dish.guard';
 
 const dishRoutes: Routes = [
 	{

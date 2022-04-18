@@ -6,10 +6,9 @@ import {
 	on,
 } from '@ngrx/store';
 import * as AppState from '../../app.state';
-import * as DishAction from './dish.action';
-
 // models
 import { IUser } from '../user/models/IUser';
+import * as DishAction from './dish.action';
 import { IDishWithUserAndComments } from './models/IDish';
 
 export interface DishState {
